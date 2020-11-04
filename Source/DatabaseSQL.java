@@ -30,16 +30,22 @@ public class DatabaseSQL {
       Creates all Tables required for the DB.
    **/
    public void createTables() {
+   
+   //NTS: when an employee of any type is entered into the DB, also enter into this
+   //NTS: employee must exist in order for the other classes to exist
       String employee = "CREATE TABLE IF NOT EXISTS Employee (\n"
-                + "  employee_id INT PRIMARY KEY, \n"
-                + "  firstName VARCHAR(50), \n"
-                + "  lastName VARCHAR(50) \n"
+                + "  firstName VARCHAR(50) NOT NULL, \n"
+                + "  lastName VARCHAR(50) NOT NULL PRIMARY KEY, \n"
+                + "  jobCategory VARCHAR(15) NOT NULL \n"
                 + ");";
+                
+                
+                
    
       String doctor = "CREATE TABLE IF NOT EXISTS Doctor (\n"
                 + "  firstName VARCHAR(50), \n"
                 + "  lastName VARCHAR(50) PRIMARY KEY \n"
-                + ");"; 
+                + ");";
                 
       String patient = "CREATE TABLE IF NOT EXISTS Patient (\n"
                 + "  firstName VARCHAR(50), \n"
@@ -102,6 +108,27 @@ public class DatabaseSQL {
    }
    
    
+   public void insertEmployee(Employee employeeIn) {
+   
+      String jobCharToString = employeeIn.jobCategory.toString();
+   
+      String sql = "INSERT INTO Employee(firstName, lastName, jobCategory)"
+               + " VALUES (?, ?, ?);";
+               
+      try (Connection conn = this.connect();) {
+         PreparedStatement ps = conn.prepareStatement(sql);
+         ps.setString(1, employeeIn.firstName);
+         ps.setString(2, employeeIn.lastName);  
+         ps.setString(3, jobCharToString);  
+         ps.executeUpdate();
+         ps.close();  
+             
+      } catch (SQLException e) {
+         System.out.println("Insert Employee error: " + e.getMessage());
+      }   
+   }
+   
+   
    public void insertTreatment(Treatment treatmentIn) {
    
       String sql = "INSERT INTO Treatment(firstName, lastName, treatmentType,"
@@ -125,7 +152,7 @@ public class DatabaseSQL {
 
    
    public void insertPerson(Person personIn) {
-      Character personType = personIn.personType;
+      Character personType = personIn.jobCategory;
       String sql;
       
       switch(personType) {
@@ -204,25 +231,5 @@ public class DatabaseSQL {
          System.out.println(e.getMessage());
       }
    }
-         
-   //needs refining 
-   public void selectData(String tableIn){
-   
-      String table = tableIn;
-   
-      String sql = "SELECT lastName FROM " + table + ";";
         
-      try (Connection conn = this.connect();
-         Statement stmt  = conn.createStatement();
-         ResultSet rs    = stmt.executeQuery(sql))   {
-         
-         // loop through the result set
-         while (rs.next()) {
-            System.out.println(rs.getString("lastName") +  "\t");
-         }
-      
-      } catch (SQLException e) {
-         System.out.println(e.getMessage());
-      }
-   }  
 }

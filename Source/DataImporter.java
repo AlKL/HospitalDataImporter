@@ -6,13 +6,16 @@ import java.util.NoSuchElementException;
 
 public class DataImporter {
 
+   //need to make proper methods for these so that they can be private 
    public Person[] personList;
    public Treatment[] treatmentList;
+   public Employee[] employeeList;
    
    //constructor
    public DataImporter() {
       personList = new Person[0];
       treatmentList = new Treatment[0];
+      employeeList = new Employee[0];
    }
    
    public void readHospitalFile(String fileName) 
@@ -56,6 +59,8 @@ public class DataImporter {
                   case 'D': 
                      Doctor d = new Doctor(firstName, lastName, personType);
                      addPerson(d);
+                     Employee e = new Employee(firstName, lastName, personType);
+                     addEmployee(e);
                      break;
                   case 'A': 
                      Administrator a = new Administrator(firstName, lastName, personType);
@@ -79,7 +84,7 @@ public class DataImporter {
             
             }
             catch (Exception e) {
-               System.out.print("Error - Program ending.");
+               System.out.print("Error - Program ending." + e);
                return;
             }
          }
@@ -106,6 +111,11 @@ public class DataImporter {
          }
       }
    
+   }
+   
+   public void addEmployee(Employee employeeIn) {
+      employeeList = Arrays.copyOf(employeeList, employeeList.length + 1);
+      employeeList[employeeList.length - 1] = employeeIn;
    }
    
    public void addPerson(Person personIn) {

@@ -11,10 +11,10 @@ public abstract class Person implements Comparable<Person> {
    protected String iniDiagnosis;
    protected String admissionDate;
    protected String dischargeDate;
-   protected Character personType;
+   protected Character jobCategory;
    
    //creates doctor/admin/volunteer/nurse/tec
-   public Person(String firstNameIn, String lastNameIn, Character personTypeIn) {
+   public Person(String firstNameIn, String lastNameIn, Character jobCategoryIn) {
       firstName = firstNameIn;
       lastName = lastNameIn;
       roomNumber = 0;
@@ -26,7 +26,7 @@ public abstract class Person implements Comparable<Person> {
       iniDiagnosis = "";
       admissionDate = "";
       dischargeDate = "";
-      personType = personTypeIn;
+      jobCategory = jobCategoryIn;
    }
    
    //creates patient
@@ -35,7 +35,7 @@ public abstract class Person implements Comparable<Person> {
                   String emergencyNumberIn, String insPolicyIn,
                   String insPolicyNoIn, String primaryDoctorLastNameIn,
                   String iniDiagnosisIn, String admissionDateIn,
-                  String dischargeDateIn, Character personTypeIn) {
+                  String dischargeDateIn, Character jobCategoryIn) {
       firstName = firstNameIn;
       lastName = lastNameIn;
       roomNumber = roomNumberIn;
@@ -47,7 +47,7 @@ public abstract class Person implements Comparable<Person> {
       iniDiagnosis = iniDiagnosisIn;
       admissionDate = admissionDateIn;
       dischargeDate = dischargeDateIn;
-      personType = personTypeIn;
+      jobCategory = jobCategoryIn;
    }
          
    public String getFirstName() {

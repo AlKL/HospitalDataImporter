@@ -8,7 +8,7 @@ public class Menu {
       //pass absolute path into parameters
       //end program if no file provided
       if (args.length == 0) {
-         System.out.println("*** File name not provided"
+         System.out.println("***File name not provided"
             + " by command line argument.");
          System.out.print("Program ending.");
          return;
@@ -31,7 +31,12 @@ public class Menu {
       
       //create all tables if they do not exist
          app.createTables();
-      
+         
+      //insert all employees's from employee array
+         for (int i = 0; i < hospitalData.employeeList.length; i++) {
+            app.insertEmployee(hospitalData.employeeList[i]);
+         }
+                     
       //insert all person's from person array
          for (int i = 0; i < hospitalData.personList.length; i++) {
             app.insertPerson(hospitalData.personList[i]);
@@ -41,6 +46,7 @@ public class Menu {
          for (int i = 0; i < hospitalData.treatmentList.length; i++) {
             app.insertTreatment(hospitalData.treatmentList[i]);
          }
+         
       }
       catch (Exception e) {
          System.out.println(e + "*** Exception thrown");
