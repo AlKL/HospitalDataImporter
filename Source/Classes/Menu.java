@@ -1,0 +1,52 @@
+import java.io.FileNotFoundException;
+
+public class Menu {
+
+   public static void main(String[] args) {
+   
+      //       RECEIVE TEXT FILE
+      //pass absolute path into parameters
+      //end program if no file provided
+      if (args.length == 0) {
+         System.out.println("*** File name not provided"
+            + " by command line argument.");
+         System.out.print("Program ending.");
+         return;
+      }
+   
+      try {
+      //       IMPORT DATA FROM TEXT FILE INTO ARRAY
+      //enter absolute path into parameters
+         DataImporter hospitalData = new DataImporter();
+         hospitalData.readHospitalFile(args[0]);
+      //test.toString();
+      
+      //       INSERT PERSONS ARRAY INTO DATABASE
+      //create database connection
+         DatabaseSQL app = new DatabaseSQL();
+         app.connect(); 
+      
+      //drop all tables
+         app.dropTables();
+      
+      //create all tables if they do not exist
+         app.createTables();
+      
+      //insert all person's from person array
+         for (int i = 0; i < hospitalData.personList.length; i++) {
+            app.insertPerson(hospitalData.personList[i]);
+         }
+         
+      //insert all treatments from treatment array
+         for (int i = 0; i < hospitalData.treatmentList.length; i++) {
+            app.insertTreatment(hospitalData.treatmentList[i]);
+         }
+      }
+      catch (Exception e) {
+         System.out.println(e + "*** Exception thrown");
+         System.out.print("Program ending.");
+         return;
+      }
+   }
+   
+}
