@@ -9,7 +9,8 @@ public class DatabaseSQL {
    
    public Connection connect() {
         // SQLite connection string
-      String url = "jdbc:sqlite:/Users/alexandrekhien/Google Drive/0 - Computer Science/Auburn/CPSC5133 Database 2/Checkpoint 3/Hosdb.sl3"; 
+      String url = "jdbc:sqlite:/Users/alexandrekhien/Google Drive/0 - Computer Science"
+                     + "/Auburn/CPSC5133 Database 2/Hospital Project/Database/HospitalDB.sl3"; 
       Connection conn = null;
       try {
          conn = DriverManager.getConnection(url);
@@ -25,7 +26,16 @@ public class DatabaseSQL {
       return conn;
    }
    
+   /** 
+      Creates all Tables required for the DB.
+   **/
    public void createTables() {
+      String employee = "CREATE TABLE IF NOT EXISTS Employee (\n"
+                + "  employee_id INT PRIMARY KEY, \n"
+                + "  firstName VARCHAR(50), \n"
+                + "  lastName VARCHAR(50) \n"
+                + ");";
+   
       String doctor = "CREATE TABLE IF NOT EXISTS Doctor (\n"
                 + "  firstName VARCHAR(50), \n"
                 + "  lastName VARCHAR(50) PRIMARY KEY \n"
@@ -83,7 +93,8 @@ public class DatabaseSQL {
          stmt.execute(nurse);       
          stmt.execute(tech);  
          stmt.execute(treatment);       
-      
+         stmt.execute(employee);   
+             
          stmt.close();         
       } catch (SQLException e) {
          System.out.println(e.getMessage());
@@ -175,6 +186,8 @@ public class DatabaseSQL {
       String dropNurse = "DROP TABLE Nurse";  
       String dropTech = "DROP TABLE Technician";
       String dropTreatment = "DROP TABLE Treatment"; 
+      String dropEmployee = "DROP TABLE Employee"; 
+   
        
       try (Connection conn = this.connect();) {
          Statement stmt  = conn.createStatement();
@@ -184,7 +197,8 @@ public class DatabaseSQL {
          stmt.execute(dropVolunteer);       
          stmt.execute(dropNurse);       
          stmt.execute(dropTech); 
-         stmt.execute(dropTreatment);       
+         stmt.execute(dropTreatment); 
+         stmt.execute(dropEmployee);      
          stmt.close();         
       } catch (SQLException e) {
          System.out.println(e.getMessage());
