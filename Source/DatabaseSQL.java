@@ -61,14 +61,19 @@ public class DatabaseSQL {
                 + "  FOREIGN KEY (primaryDoctorLastName) REFERENCES Doctor (lastName) \n"
                 + ");";         
                 
+      // String room = "CREATE TABLE IF NOT EXISTS Rooms (\n"
+         //        + "  roomNumber int PRIMARY KEY NOT NULL, \n"
+         //        + "  roomOcc integer \n"
+         //        + ");";
+                
       String treatment = "CREATE TABLE IF NOT EXISTS Treatment (\n"
                 + "  firstName VARCHAR(50), \n"
                 + "  lastName VARCHAR(50), \n"
                 + "  treatMentType VARCHAR(1), \n"
                 + "  treatment VARCHAR(50), \n"
                 + "  treatmentDate VARCHAR(50) \n"
-                + ");";   
-                                   
+                + ");";    
+                                                  
       try (Connection conn = this.connect();) {
          Statement stmt  = conn.createStatement();
          stmt.execute(employee);   
@@ -77,6 +82,8 @@ public class DatabaseSQL {
          stmt.close();         
       } catch (SQLException e) {
          System.out.println(e.getMessage());
+         e.printStackTrace();
+      
       }
    }
    
@@ -95,24 +102,24 @@ public class DatabaseSQL {
          stmt.close();         
       } catch (SQLException e) {
          System.out.println(e.getMessage());
+         e.printStackTrace();
+      
       }      
    }
       
    public void dropAllTables() {
-      this.dropTable("Doctor");
       this.dropTable("Patient");
       this.dropTable("Nurse");
       this.dropTable("Administrator");
       this.dropTable("Technician");
       this.dropTable("Volunteer");
       this.dropTable("Treatment");
+      this.dropTable("Doctor");
       this.dropTable("Employee");
-   
    }
    
    public void dropTable(String tableIn) {
-   
-      String sql = "DROP TABLE " + tableIn;
+      String sql = "DROP TABLE " + tableIn + ";";
       
       try (Connection conn = this.connect();) {
          Statement stmt  = conn.createStatement();
@@ -120,14 +127,11 @@ public class DatabaseSQL {
          stmt.close();         
       } catch (SQLException e) {
          System.out.println(e.getMessage());
+         e.printStackTrace();
+      
       }      
    }
    
-   
-   
-   
-   
-  
    public void insertEmployee(Employee employeeIn) {
    
       Character jobCat = employeeIn.jobCategory;
@@ -172,6 +176,8 @@ public class DatabaseSQL {
          
       } catch (SQLException e) {
          System.out.println("Insert Employee error: " + e.getMessage());
+         e.printStackTrace();
+      
       }   
    }
    

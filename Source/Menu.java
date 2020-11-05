@@ -19,25 +19,22 @@ public class Menu {
       //enter absolute path into parameters
          DataImporter hospitalData = new DataImporter();
          hospitalData.readHospitalFile(args[0]);
-      //test.toString();
       
       //       INSERT PERSONS ARRAY INTO DATABASE
       //create database connection
          DatabaseSQL app = new DatabaseSQL();
          app.connect(); 
       
-      //drop all tables
+      //drop all tables then create all tables to reset tables
          app.dropAllTables();
-      
-      //create all tables if they do not exist
          app.createAllTables();
          
-      //insert all employees's from employee array
+      //insert all employeess from employee array
          for (int i = 0; i < hospitalData.employeeList.length; i++) {
             app.insertEmployee(hospitalData.employeeList[i]);
          }
                      
-      //insert all patient's from patient array
+      //insert all patients from patient array
          for (int i = 0; i < hospitalData.patientList.length; i++) {
             app.insertPatient(hospitalData.patientList[i]);
          }
@@ -48,6 +45,7 @@ public class Menu {
          }
                   
       }
+      //catch and trace exceptions
       catch (Exception e) {
          System.out.println(e + "*** Exception thrown");
          e.printStackTrace();
