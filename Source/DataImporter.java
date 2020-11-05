@@ -72,21 +72,9 @@ public class DataImporter {
                      }
                   
                   case 'D': 
-                     Employee ed = new Employee(firstName, lastName, personType);
-                     addEmployee(ed);
-                     break;
                   case 'A': 
-                     Employee ea = new Employee(firstName, lastName, personType);
-                     addEmployee(ea);
-                     break;
                   case 'V': 
-                     Employee ev = new Employee(firstName, lastName, personType);
-                     addEmployee(ev);                        
-                     break;
                   case 'N': 
-                     Employee en = new Employee(firstName, lastName, personType);
-                     addEmployee(en);                         
-                     break;
                   case 'T': 
                      Employee et = new Employee(firstName, lastName, personType);
                      addEmployee(et);                         

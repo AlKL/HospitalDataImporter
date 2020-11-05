@@ -44,7 +44,13 @@ public class DatabaseSQL {
       createTable("Administrator");
       createTable("Technician");
       createTable("Volunteer");
-      
+                         
+      String room = "CREATE TABLE IF NOT EXISTS Rooms (\n"
+                + "  roomNumber integer PRIMARY KEY NOT NULL, \n"
+                + "  roomOcc integer, \n"
+                + "  CHECK (roomNumber >= 0 AND roomNumber <= 20)"
+                + ");";
+                
       String patient = "CREATE TABLE IF NOT EXISTS Patient (\n"
                 + "  patientID integer PRIMARY KEY NOT NULL, \n"
                 + "  firstName VARCHAR(50) NOT NULL, \n"
@@ -57,7 +63,7 @@ public class DatabaseSQL {
                 + "  patientID integer PRIMARY KEY NOT NULL, \n"
                 + "  firstName VARCHAR(50) NOT NULL, \n"
                 + "  lastName VARCHAR(50) NOT NULL, \n"
-                + "	roomNumber integer, \n"
+                + "	roomNumber integer UNIQUE, \n"
                 + "  emergencyContact VARCHAR(100), \n"
                 + "  emergencyNumber  VARCHAR(100), \n"
                 + "  insPolicy VARCHAR(100), \n"
@@ -66,16 +72,11 @@ public class DatabaseSQL {
                 + "  iniDiagnosis VARCHAR(100) NOT NULL, \n"
                 + "  admissionDate VARCHAR(100) NOT NULL, \n"
                 + "  dischargeDate VARCHAR(100), \n"
-                + "  FOREIGN KEY (primaryDoctorLastName) REFERENCES Doctor (lastName) \n"
+                + "  FOREIGN KEY (patientID) REFERENCES Patient (patientID), \n"
+                + "  FOREIGN KEY (primaryDoctorLastName) REFERENCES Doctor (lastName), \n"
+                + "  FOREIGN KEY (roomNumber) REFERENCES Rooms (roomNumber) \n"
                 + ");";         
-                
-      String room = "CREATE TABLE IF NOT EXISTS Rooms (\n"
-                + "  roomNumber integer PRIMARY KEY NOT NULL, \n"
-                + "  roomOcc integer, \n"
-                + "  CHECK (roomNumber >= 0 AND roomNumber <= 20)"
-                + ");";
-                
-                
+   
       String treatment = "CREATE TABLE IF NOT EXISTS Treatment (\n"
                 + "  firstName VARCHAR(50), \n"
                 + "  lastName VARCHAR(50), \n"
@@ -231,8 +232,13 @@ public class DatabaseSQL {
                + " primaryDoctorLastName, iniDiagnosis, admissionDate, dischargeDate)"
                + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"; 
                
+      String update = "UPDATE Rooms"
+                  + " SET roomOcc = 1"
+                  + " WHERE roomNumber = " + patientIn.roomNo + ";";
+                  
       try (Connection conn = this.connect();) {
          PreparedStatement ps = conn.prepareStatement(sql);
+         Statement stmt  = conn.createStatement();
          
          ps.setInt(1, patientIn.patientID);
          ps.setString(2, patientIn.firstName);
@@ -248,6 +254,8 @@ public class DatabaseSQL {
          ps.setString(12, patientIn.dischargeDate); 
                  
          ps.executeUpdate();
+         stmt.execute(update); 
+      
          ps.close();
       } catch (SQLException e) {
          System.out.println(e.getMessage());
