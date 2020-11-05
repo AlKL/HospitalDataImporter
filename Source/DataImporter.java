@@ -7,15 +7,17 @@ import java.util.NoSuchElementException;
 public class DataImporter {
 
    //need to make proper methods for these so that they can be private 
-   public Person[] personList;
+   public Patient[] patientList;
    public Treatment[] treatmentList;
    public Employee[] employeeList;
+   int patientID;
    
    //constructor
    public DataImporter() {
-      personList = new Person[0];
+      patientList = new Patient[0];
       treatmentList = new Treatment[0];
       employeeList = new Employee[0];
+      patientID = 1001;
    }
    
    public void readHospitalFile(String fileName) 
@@ -37,7 +39,7 @@ public class DataImporter {
                Character personType = wordScan.next().toUpperCase().trim().charAt(0);
                String firstName = wordScan.next().trim();
                String lastName = wordScan.next().trim(); 
-               
+            
                switch (personType) {
                   case 'P': 
                      int roomNumber = wordScan.nextInt();
@@ -50,33 +52,33 @@ public class DataImporter {
                      String admissionDate = wordScan.next().trim();
                      String dischargeDate = wordScan.next().trim();
                   
-                     Patient p = new Patient(firstName, lastName, roomNumber,
+                     Patient p = new Patient(patientID, firstName, lastName, roomNumber,
                                     emergencyContact, emergencyNumber,
                                     insPolicy, insPolicyNo, primaryDoctorLastName,
                                     iniDiagnosis, admissionDate, dischargeDate, personType);
-                     addPerson(p);
+                     patientID++;
+                  
+                     addPatient(p);
                      break;
                   case 'D': 
-                     Doctor d = new Doctor(firstName, lastName, personType);
-                     addPerson(d);
-                     Employee e = new Employee(firstName, lastName, personType);
-                     addEmployee(e);
+                     Employee ed = new Employee(firstName, lastName, personType);
+                     addEmployee(ed);
                      break;
                   case 'A': 
-                     Administrator a = new Administrator(firstName, lastName, personType);
-                     addPerson(a);
+                     Employee ea = new Employee(firstName, lastName, personType);
+                     addEmployee(ea);
                      break;
                   case 'V': 
-                     Volunteer v = new Volunteer(firstName, lastName, personType);
-                     addPerson(v);
+                     Employee ev = new Employee(firstName, lastName, personType);
+                     addEmployee(ev);                        
                      break;
                   case 'N': 
-                     Nurse n = new Nurse(firstName, lastName, personType);
-                     addPerson(n);
+                     Employee en = new Employee(firstName, lastName, personType);
+                     addEmployee(en);                         
                      break;
                   case 'T': 
-                     Technician t = new Technician(firstName, lastName, personType);
-                     addPerson(t);
+                     Employee et = new Employee(firstName, lastName, personType);
+                     addEmployee(et);                         
                      break;
                   default :
                      break;
@@ -118,9 +120,9 @@ public class DataImporter {
       employeeList[employeeList.length - 1] = employeeIn;
    }
    
-   public void addPerson(Person personIn) {
-      personList = Arrays.copyOf(personList, personList.length + 1);
-      personList[personList.length - 1] = personIn;
+   public void addPatient(Patient patientIn) {
+      patientList = Arrays.copyOf(patientList, patientList.length + 1);
+      patientList[patientList.length - 1] = patientIn;
    }
    
    public void addTreatment(Treatment treatmentIn) {
@@ -130,7 +132,7 @@ public class DataImporter {
    
    public String toString() {
       String stringResult = "";
-      for (Person p : personList) {
+      for (Patient p : patientList) {
          stringResult += "\n" + p + "\n";
       }
       return stringResult;

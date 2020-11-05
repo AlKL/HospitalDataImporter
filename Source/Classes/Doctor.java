@@ -1,4 +1,4 @@
-public class Doctor extends Person {
+public class Doctor extends Employee {
 
    public Doctor (String firstNameIn, String lastNameIn, Character personTypeIn) {
       super(firstNameIn, lastNameIn, personTypeIn);

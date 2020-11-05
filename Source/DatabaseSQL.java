@@ -39,25 +39,24 @@ public class DatabaseSQL {
                 + "  jobCategory VARCHAR(15) NOT NULL \n"
                 + ");";
                 
-                
-                
-   
       String doctor = "CREATE TABLE IF NOT EXISTS Doctor (\n"
-                + "  firstName VARCHAR(50), \n"
-                + "  lastName VARCHAR(50) PRIMARY KEY \n"
+                + "  firstName VARCHAR(50) NOT NULL, \n"
+                + "  lastName VARCHAR(50) NOT NULL PRIMARY KEY, \n"
+                + "  FOREIGN KEY (lastName) REFERENCES Employee (lastName) \n"
                 + ");";
                 
       String patient = "CREATE TABLE IF NOT EXISTS Patient (\n"
-                + "  firstName VARCHAR(50), \n"
-                + "  lastName VARCHAR(50) PRIMARY KEY, \n"
+                + "  patientID integer PRIMARY KEY NOT NULL, \n"
+                + "  firstName VARCHAR(50) NOT NULL, \n"
+                + "  lastName VARCHAR(50) NOT NULL, \n"
                 + "	roomNumber integer,\n"
                 + "  emergencyContact VARCHAR(100), \n"
                 + "  emergencyNumber  VARCHAR(100), \n"
                 + "  insPolicy VARCHAR(100), \n"
                 + "  insPolicyNo VARCHAR(100), \n"
-                + "  primaryDoctorLastName VARCHAR(50), \n"
-                + "  iniDiagnosis VARCHAR(100), \n"
-                + "  admissionDate VARCHAR(100), \n"
+                + "  primaryDoctorLastName VARCHAR(50) NOT NULL, \n"
+                + "  iniDiagnosis VARCHAR(100) NOT NULL, \n"
+                + "  admissionDate VARCHAR(100) NOT NULL, \n"
                 + "  dischargeDate VARCHAR(100), \n"
                 + "  FOREIGN KEY (primaryDoctorLastName) REFERENCES Doctor (lastName) \n"
                 + ");";     
@@ -92,6 +91,7 @@ public class DatabaseSQL {
                                    
       try (Connection conn = this.connect();) {
          Statement stmt  = conn.createStatement();
+         stmt.execute(employee);   
          stmt.execute(patient);   
          stmt.execute(doctor); 
          stmt.execute(admin);       
@@ -99,8 +99,6 @@ public class DatabaseSQL {
          stmt.execute(nurse);       
          stmt.execute(tech);  
          stmt.execute(treatment);       
-         stmt.execute(employee);   
-             
          stmt.close();         
       } catch (SQLException e) {
          System.out.println(e.getMessage());
@@ -110,7 +108,9 @@ public class DatabaseSQL {
    
    public void insertEmployee(Employee employeeIn) {
    
+      Character jobCat = employeeIn.jobCategory;
       String jobCharToString = employeeIn.jobCategory.toString();
+      String profession;
    
       String sql = "INSERT INTO Employee(firstName, lastName, jobCategory)"
                + " VALUES (?, ?, ?);";
@@ -121,12 +121,83 @@ public class DatabaseSQL {
          ps.setString(2, employeeIn.lastName);  
          ps.setString(3, jobCharToString);  
          ps.executeUpdate();
-         ps.close();  
-             
+         
+         switch (jobCat) {
+            case 'D': 
+               profession = "Doctor";
+               insertEmpToCat(employeeIn, profession);
+               break;
+            case 'N': 
+               profession = "Nurse";
+               insertEmpToCat(employeeIn, profession);
+               break;
+            case 'A': 
+               profession = "Administrator";
+               insertEmpToCat(employeeIn, profession);
+               break;
+            case 'T': 
+               profession = "Technician";
+               insertEmpToCat(employeeIn, profession);
+               break;
+            case 'V': 
+               profession = "Volunteer";
+               insertEmpToCat(employeeIn, profession);
+               break;
+            default:
+               break;
+         }
+         ps.close();
+         
       } catch (SQLException e) {
          System.out.println("Insert Employee error: " + e.getMessage());
       }   
    }
+   
+   public void insertEmpToCat(Employee employeeIn, String professionIn) {
+      String sql = "INSERT INTO " + professionIn + "(firstName, lastName) VALUES (?, ?);";
+      
+      try (Connection conn = this.connect();) {
+         PreparedStatement ps = conn.prepareStatement(sql);
+         ps.setString(1, employeeIn.firstName);
+         ps.setString(2, employeeIn.lastName);
+         ps.executeUpdate();
+         ps.close();
+         
+      } catch (SQLException e) {
+         System.out.println(e.getMessage());
+      }
+   }
+   
+   public void insertPatient(Person patientIn) {
+      String sql = "INSERT INTO Patient(patientID, firstName, lastName, roomNumber,"
+               + " emergencyContact, emergencyNumber, insPolicy, insPolicyNo,"
+               + " primaryDoctorLastName, iniDiagnosis, admissionDate, dischargeDate)"
+               + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"; 
+               
+      try (Connection conn = this.connect();) {
+         PreparedStatement ps = conn.prepareStatement(sql);
+         
+         ps.setInt(1, patientIn.patientID);
+         ps.setString(2, patientIn.firstName);
+         ps.setString(3, patientIn.lastName);          
+         ps.setInt(4, patientIn.roomNumber);
+         ps.setString(5, patientIn.emergencyContact);
+         ps.setString(6, patientIn.emergencyNumber);
+         ps.setString(7, patientIn.insPolicy);
+         ps.setString(8, patientIn.insPolicyNo);
+         ps.setString(9, patientIn.primaryDoctorLastName);
+         ps.setString(10, patientIn.iniDiagnosis);
+         ps.setString(11, patientIn.admissionDate);
+         ps.setString(12, patientIn.dischargeDate); 
+                 
+         ps.executeUpdate();
+         ps.close();
+      } catch (SQLException e) {
+         System.out.println(e.getMessage());
+      } 
+   }
+   
+   
    
    
    public void insertTreatment(Treatment treatmentIn) {
@@ -146,7 +217,7 @@ public class DatabaseSQL {
          ps.close();
       
       } catch (SQLException e) {
-         System.out.println(e.getMessage() + "THIS");
+         System.out.println(e.getMessage());
       }   
    }
 

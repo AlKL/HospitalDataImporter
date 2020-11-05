@@ -38,8 +38,8 @@ public class Menu {
          }
                      
       //insert all person's from person array
-         for (int i = 0; i < hospitalData.personList.length; i++) {
-            app.insertPerson(hospitalData.personList[i]);
+         for (int i = 0; i < hospitalData.patientList.length; i++) {
+            app.insertPatient(hospitalData.patientList[i]);
          }
          
       //insert all treatments from treatment array
@@ -50,6 +50,7 @@ public class Menu {
       }
       catch (Exception e) {
          System.out.println(e + "*** Exception thrown");
+         e.printStackTrace();
          System.out.print("Program ending.");
          return;
       }

@@ -1,4 +1,5 @@
 public abstract class Person implements Comparable<Person> {
+   protected int patientID;
    protected String type;
    protected String firstName;
    protected String lastName;
@@ -18,24 +19,17 @@ public abstract class Person implements Comparable<Person> {
       firstName = firstNameIn;
       lastName = lastNameIn;
       roomNumber = 0;
-      emergencyContact = "";
-      emergencyNumber = "";
-      insPolicy = "";
-      insPolicyNo = "";
-      primaryDoctorLastName = "";
-      iniDiagnosis = "";
-      admissionDate = "";
-      dischargeDate = "";
       jobCategory = jobCategoryIn;
    }
    
    //creates patient
-   public Person(String firstNameIn, String lastNameIn,
+   public Person(int patientIDIn, String firstNameIn, String lastNameIn,
                   int roomNumberIn, String emergencyContactIn,
                   String emergencyNumberIn, String insPolicyIn,
                   String insPolicyNoIn, String primaryDoctorLastNameIn,
                   String iniDiagnosisIn, String admissionDateIn,
                   String dischargeDateIn, Character jobCategoryIn) {
+      patientID = patientIDIn;
       firstName = firstNameIn;
       lastName = lastNameIn;
       roomNumber = roomNumberIn;
