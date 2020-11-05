@@ -1,10 +1,15 @@
-public class Employee extends Person {
-
-   public Employee (String firstNameIn, String lastNameIn, Character personTypeIn) {
-      super(firstNameIn, lastNameIn, personTypeIn);
-   }   
+public class Employee {
+   protected String firstName;
+   protected String lastName;
+   protected Character jobCat;
+   
+   public Employee(String firstNameIn, String lastNameIn, Character jobCatIn) {
+      firstName = firstNameIn;
+      lastName = lastNameIn;
+      jobCat = jobCatIn;
+   }
 
    public String toString() {
-      return "Employee: " + super.getFirstName();
+      return "temp";
    }
 }

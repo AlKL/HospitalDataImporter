@@ -33,10 +33,15 @@ public class Menu {
          for (int i = 0; i < hospitalData.employeeList.length; i++) {
             app.insertEmployee(hospitalData.employeeList[i]);
          }
-                     
-      //insert all patients from patient array
+         
+       //insert all patients from patient array
          for (int i = 0; i < hospitalData.patientList.length; i++) {
             app.insertPatient(hospitalData.patientList[i]);
+         }
+                     
+      //insert all in-patients from patient array
+         for (int i = 0; i < hospitalData.inPatientList.length; i++) {
+            app.insertInPatient(hospitalData.inPatientList[i]);
          }
          
       //insert all treatments from treatment array

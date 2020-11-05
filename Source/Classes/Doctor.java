@@ -5,7 +5,7 @@ public class Doctor extends Employee {
    }   
 
    public String toString() {
-      return "Doctor: " + super.getFirstName();
+      return "null";
    }
 
 }

@@ -8,6 +8,7 @@ public class DataImporter {
 
    //need to make proper methods for these so that they can be private 
    public Patient[] patientList;
+   public Patient[] inPatientList;
    public Treatment[] treatmentList;
    public Employee[] employeeList;
    int patientID;
@@ -15,6 +16,7 @@ public class DataImporter {
    //constructor
    public DataImporter() {
       patientList = new Patient[0];
+      inPatientList = new Patient[0];
       treatmentList = new Treatment[0];
       employeeList = new Employee[0];
       patientID = 1001;
@@ -42,24 +44,33 @@ public class DataImporter {
             
                switch (personType) {
                   case 'P': 
-                     int roomNumber = wordScan.nextInt();
-                     String emergencyContact = wordScan.next().trim();
-                     String emergencyNumber = wordScan.next().trim();
+                     int roomNo = wordScan.nextInt();
+                     String emergContact = wordScan.next().trim();
+                     String emergNo = wordScan.next().trim();
                      String insPolicy = wordScan.next().trim();
                      String insPolicyNo = wordScan.next().trim();
-                     String primaryDoctorLastName = wordScan.next().trim();
+                     String docLastName = wordScan.next().trim();
                      String iniDiagnosis = wordScan.next().trim();
                      String admissionDate = wordScan.next().trim();
                      String dischargeDate = wordScan.next().trim();
+                     
+                     if (roomNo > 0) {
+                        Patient p = new Patient(patientID, firstName, lastName, roomNo,
+                                    emergContact, emergNo,insPolicy, insPolicyNo, docLastName,
+                                    iniDiagnosis, admissionDate, dischargeDate);
+                        Patient np = new Patient(patientID, firstName, lastName, docLastName, iniDiagnosis);
+                        addInPatient(p);
+                        addPatient(np);
+                        patientID++;
+                        continue;
+                     }
+                     else {
+                        Patient p = new Patient(patientID, firstName, lastName, docLastName, iniDiagnosis);
+                        addPatient(p);
+                        patientID++;
+                        continue;
+                     }
                   
-                     Patient p = new Patient(patientID, firstName, lastName, roomNumber,
-                                    emergencyContact, emergencyNumber,
-                                    insPolicy, insPolicyNo, primaryDoctorLastName,
-                                    iniDiagnosis, admissionDate, dischargeDate, personType);
-                     patientID++;
-                  
-                     addPatient(p);
-                     break;
                   case 'D': 
                      Employee ed = new Employee(firstName, lastName, personType);
                      addEmployee(ed);
@@ -87,6 +98,7 @@ public class DataImporter {
             }
             catch (Exception e) {
                System.out.print("Error - Program ending." + e);
+               e.printStackTrace();
                return;
             }
          }
@@ -123,6 +135,11 @@ public class DataImporter {
    public void addPatient(Patient patientIn) {
       patientList = Arrays.copyOf(patientList, patientList.length + 1);
       patientList[patientList.length - 1] = patientIn;
+   }
+   
+   public void addInPatient(Patient patientIn) {
+      inPatientList = Arrays.copyOf(inPatientList, inPatientList.length + 1);
+      inPatientList[inPatientList.length - 1] = patientIn;
    }
    
    public void addTreatment(Treatment treatmentIn) {
