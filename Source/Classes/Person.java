@@ -14,7 +14,7 @@ public abstract class Person implements Comparable<Person> {
    protected String dischargeDate;
    protected Character jobCategory;
    
-   //creates doctor/admin/volunteer/nurse/tec
+   //creates employee
    public Person(String firstNameIn, String lastNameIn, Character jobCategoryIn) {
       firstName = firstNameIn;
       lastName = lastNameIn;

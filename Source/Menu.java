@@ -30,14 +30,14 @@ public class Menu {
          app.dropTables();
       
       //create all tables if they do not exist
-         app.createTables();
+         app.createAllTables();
          
       //insert all employees's from employee array
          for (int i = 0; i < hospitalData.employeeList.length; i++) {
             app.insertEmployee(hospitalData.employeeList[i]);
          }
                      
-      //insert all person's from person array
+      //insert all patient's from patient array
          for (int i = 0; i < hospitalData.patientList.length; i++) {
             app.insertPatient(hospitalData.patientList[i]);
          }
