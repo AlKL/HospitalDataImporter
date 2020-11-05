@@ -97,7 +97,37 @@ public class DatabaseSQL {
          System.out.println(e.getMessage());
       }      
    }
+      
+   public void dropAllTables() {
+      this.dropTable("Doctor");
+      this.dropTable("Patient");
+      this.dropTable("Nurse");
+      this.dropTable("Administrator");
+      this.dropTable("Technician");
+      this.dropTable("Volunteer");
+      this.dropTable("Treatment");
+      this.dropTable("Employee");
    
+   }
+   
+   public void dropTable(String tableIn) {
+   
+      String sql = "DROP TABLE " + tableIn;
+      
+      try (Connection conn = this.connect();) {
+         Statement stmt  = conn.createStatement();
+         stmt.execute(sql);       
+         stmt.close();         
+      } catch (SQLException e) {
+         System.out.println(e.getMessage());
+      }      
+   }
+   
+   
+   
+   
+   
+  
    public void insertEmployee(Employee employeeIn) {
    
       Character jobCat = employeeIn.jobCategory;
@@ -208,33 +238,6 @@ public class DatabaseSQL {
       } catch (SQLException e) {
          System.out.println(e.getMessage());
       }   
-   }
-
-   public void dropTables() {
-      String dropPatient = "DROP TABLE Patient";  
-      String dropDoctor = "DROP TABLE Doctor";  
-      String dropAdmin = "DROP TABLE Administrator";  
-      String dropVolunteer = "DROP TABLE Volunteer";  
-      String dropNurse = "DROP TABLE Nurse";  
-      String dropTech = "DROP TABLE Technician";
-      String dropTreatment = "DROP TABLE Treatment"; 
-      String dropEmployee = "DROP TABLE Employee"; 
-   
-       
-      try (Connection conn = this.connect();) {
-         Statement stmt  = conn.createStatement();
-         stmt.execute(dropPatient);   
-         stmt.execute(dropDoctor);  
-         stmt.execute(dropAdmin);       
-         stmt.execute(dropVolunteer);       
-         stmt.execute(dropNurse);       
-         stmt.execute(dropTech); 
-         stmt.execute(dropTreatment); 
-         stmt.execute(dropEmployee);      
-         stmt.close();         
-      } catch (SQLException e) {
-         System.out.println(e.getMessage());
-      }
    }
         
 }

@@ -27,7 +27,7 @@ public class Menu {
          app.connect(); 
       
       //drop all tables
-         app.dropTables();
+         app.dropAllTables();
       
       //create all tables if they do not exist
          app.createAllTables();
@@ -46,7 +46,7 @@ public class Menu {
          for (int i = 0; i < hospitalData.treatmentList.length; i++) {
             app.insertTreatment(hospitalData.treatmentList[i]);
          }
-         
+                  
       }
       catch (Exception e) {
          System.out.println(e + "*** Exception thrown");
