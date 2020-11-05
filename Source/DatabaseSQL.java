@@ -49,7 +49,7 @@ public class DatabaseSQL {
                 + "  patientID integer PRIMARY KEY NOT NULL, \n"
                 + "  firstName VARCHAR(50) NOT NULL, \n"
                 + "  lastName VARCHAR(50) NOT NULL, \n"
-                + "	roomNumber integer,\n"
+                + "	roomNumber integer, \n"
                 + "  emergencyContact VARCHAR(100), \n"
                 + "  emergencyNumber  VARCHAR(100), \n"
                 + "  insPolicy VARCHAR(100), \n"
@@ -61,10 +61,12 @@ public class DatabaseSQL {
                 + "  FOREIGN KEY (primaryDoctorLastName) REFERENCES Doctor (lastName) \n"
                 + ");";         
                 
-      // String room = "CREATE TABLE IF NOT EXISTS Rooms (\n"
-         //        + "  roomNumber int PRIMARY KEY NOT NULL, \n"
-         //        + "  roomOcc integer \n"
-         //        + ");";
+      String room = "CREATE TABLE IF NOT EXISTS Rooms (\n"
+                + "  roomNumber integer PRIMARY KEY NOT NULL, \n"
+                + "  roomOcc integer, \n"
+                + "  CHECK (roomNumber >= 0 AND roomNumber <= 20)"
+                + ");";
+                
                 
       String treatment = "CREATE TABLE IF NOT EXISTS Treatment (\n"
                 + "  firstName VARCHAR(50), \n"
@@ -76,8 +78,10 @@ public class DatabaseSQL {
                                                   
       try (Connection conn = this.connect();) {
          Statement stmt  = conn.createStatement();
-         stmt.execute(employee);   
-         stmt.execute(patient);    
+         stmt.execute(employee); 
+         stmt.execute(room);     
+         stmt.execute(patient); 
+         this.createRooms();
          stmt.execute(treatment);       
          stmt.close();         
       } catch (SQLException e) {
@@ -87,6 +91,22 @@ public class DatabaseSQL {
       }
    }
    
+   //initializes 20 rooms
+   public void createRooms() {    
+      try (Connection conn = this.connect();) {
+         Statement stmt  = conn.createStatement();
+         for (int i = 1; i <= 20; i++) {
+            String sql = "INSERT INTO Rooms (roomNumber, roomOcc)"
+               + "  VALUES (" + i + ", 0);";
+            stmt.execute(sql); 
+         }   
+         stmt.close();         
+      } catch (SQLException e) {
+         System.out.println(e.getMessage());
+         e.printStackTrace();
+      
+      }   
+   }
    
    public void createTable(String tableNameIn) {
    
@@ -116,6 +136,7 @@ public class DatabaseSQL {
       this.dropTable("Treatment");
       this.dropTable("Doctor");
       this.dropTable("Employee");
+      this.dropTable("Rooms");
    }
    
    public void dropTable(String tableIn) {
