@@ -13,7 +13,7 @@ public class Patient {
    protected String admissionDate;
    protected String dischargeDate;
    
-   //constructor - non in-patient
+   //constructor - all patients
    public Patient(int patientIDIn, String firstNameIn, String lastNameIn, String docLastNameIn,
                String iniDiagnosisIn) {
       patientID = patientIDIn;

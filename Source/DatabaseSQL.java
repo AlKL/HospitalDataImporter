@@ -77,13 +77,7 @@ public class DatabaseSQL {
                 + "  FOREIGN KEY (roomNumber) REFERENCES Rooms (roomNumber) \n"
                 + ");";         
    
-      String treatment = "CREATE TABLE IF NOT EXISTS Treatment (\n"
-                + "  firstName VARCHAR(50), \n"
-                + "  lastName VARCHAR(50), \n"
-                + "  treatMentType VARCHAR(1), \n"
-                + "  treatment VARCHAR(50), \n"
-                + "  treatmentDate VARCHAR(50) \n"
-                + ");";    
+      createTreatmentTable();  
                                                   
       try (Connection conn = this.connect();) {
          Statement stmt  = conn.createStatement();
@@ -92,7 +86,6 @@ public class DatabaseSQL {
          this.createRooms();
          stmt.execute(patient); 
          stmt.execute(inPatient); 
-         stmt.execute(treatment);       
          stmt.close();         
       } catch (SQLException e) {
          System.out.println(e.getMessage());
@@ -101,7 +94,9 @@ public class DatabaseSQL {
       }
    }
    
-   //initializes 20 rooms
+   /**
+   Initializes 20 rooms in Rooms table and sets occupied to 0 (false)
+   **/
    public void createRooms() {    
       try (Connection conn = this.connect();) {
          Statement stmt  = conn.createStatement();
@@ -124,6 +119,26 @@ public class DatabaseSQL {
                 + "  firstName VARCHAR(50) NOT NULL, \n"
                 + "  lastName VARCHAR(50) NOT NULL PRIMARY KEY, \n"
                 + "  FOREIGN KEY (lastName) REFERENCES Employee (lastName) \n"
+                + ");"; 
+                     
+      try (Connection conn = this.connect();) {
+         Statement stmt  = conn.createStatement();
+         stmt.execute(sql);         
+         stmt.close();         
+      } catch (SQLException e) {
+         System.out.println(e.getMessage());
+         e.printStackTrace();
+      }      
+   }
+   
+   public void createTreatmentTable() {
+   
+      String sql = "CREATE TABLE IF NOT EXISTS Treatment (\n"
+                + "  firstName VARCHAR(50), \n"
+                + "  lastName VARCHAR(50), \n"
+                + "  treatmentType VARCHAR(1), \n"
+                + "  treatment VARCHAR(50), \n"
+                + "  treatmentDate VARCHAR(50) \n"
                 + ");"; 
                      
       try (Connection conn = this.connect();) {
@@ -161,6 +176,21 @@ public class DatabaseSQL {
          e.printStackTrace();
       }      
    }
+   
+   public void dropTreatment() {
+      String sql = "DROP TABLE Treatment;";
+      
+      try (Connection conn = this.connect();) {
+         Statement stmt  = conn.createStatement();
+         stmt.execute(sql);       
+         stmt.close();         
+      } catch (SQLException e) {
+         System.out.println(e.getMessage());
+         e.printStackTrace();
+      }   
+   
+   }
+   
    
    public void insertEmployee(Employee employeeIn) {
    
@@ -232,6 +262,7 @@ public class DatabaseSQL {
                + " primaryDoctorLastName, iniDiagnosis, admissionDate, dischargeDate)"
                + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"; 
                
+   //updates Rooms table when new in-patient is inserted            
       String update = "UPDATE Rooms"
                   + " SET roomOcc = 1"
                   + " WHERE roomNumber = " + patientIn.roomNo + ";";
@@ -295,9 +326,9 @@ public class DatabaseSQL {
    
       try (Connection conn = this.connect();) {
          PreparedStatement ps = conn.prepareStatement(sql);
-         ps.setString(1, treatmentIn.firstName);
-         ps.setString(2, treatmentIn.lastName);
-         ps.setString(3, String.valueOf(treatmentIn.type));
+         ps.setString(1, treatmentIn.ptLastName);
+         ps.setString(2, treatmentIn.docLastName);
+         ps.setString(3, String.valueOf(treatmentIn.treatType));
          ps.setString(4, treatmentIn.treatment);
          ps.setString(5, treatmentIn.treatmentDate);
          ps.executeUpdate();
@@ -307,5 +338,4 @@ public class DatabaseSQL {
          System.out.println(e.getMessage());
       }   
    }
-        
 }
