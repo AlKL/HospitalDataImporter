@@ -77,7 +77,9 @@ public class DatabaseSQL {
                 + "  FOREIGN KEY (roomNumber) REFERENCES Rooms (roomNumber) \n"
                 + ");";         
    
-      createTreatmentTable();  
+      createTreatmentTable(); 
+      createDiagnosisTable();
+       
                                                   
       try (Connection conn = this.connect();) {
          Statement stmt  = conn.createStatement();
@@ -134,8 +136,8 @@ public class DatabaseSQL {
    public void createTreatmentTable() {
    
       String sql = "CREATE TABLE IF NOT EXISTS Treatment (\n"
-                + "  firstName VARCHAR(50), \n"
-                + "  lastName VARCHAR(50), \n"
+                + "  ptLastName VARCHAR(50) PRIMARY KEY, \n"
+                + "  docLastName VARCHAR(50), \n"
                 + "  treatmentType VARCHAR(1), \n"
                 + "  treatment VARCHAR(50), \n"
                 + "  treatmentDate VARCHAR(50) \n"
@@ -150,9 +152,31 @@ public class DatabaseSQL {
          e.printStackTrace();
       }      
    }
+   
+   //////////////////////////////////////////////////////////////
+   //Create diagnosis array//////////////////////////////////////
+   //diagnosis' are created with inpatient creation
+   public void createDiagnosisTable() {
+      String sql = "CREATE TABLE IF NOT EXISTS Diagnosis (\n"
+                + "  diagnosisID integer, \n"
+                + "  diagnosisName VARCHAR(100), \n"
+                + "  patientID integer PRIMARY KEY, \n"
+                + "  FOREIGN KEY (patientID) REFERENCES Patient (patientID) \n"
+                + ");"; 
+                     
+      try (Connection conn = this.connect();) {
+         Statement stmt  = conn.createStatement();
+         stmt.execute(sql);         
+         stmt.close();         
+      } catch (SQLException e) {
+         System.out.println(e.getMessage());
+         e.printStackTrace();
+      }       
+   }
       
    public void dropAllTables() {      
       this.dropTable("InPatient");
+      this.dropTable("Diagnosis");
       this.dropTable("Patient");
       this.dropTable("Nurse");
       this.dropTable("Administrator");
@@ -291,7 +315,6 @@ public class DatabaseSQL {
       } catch (SQLException e) {
          System.out.println(e.getMessage());
          e.printStackTrace();
-      
       } 
    }
    
@@ -317,10 +340,10 @@ public class DatabaseSQL {
       
       }     
    }
-   
+         
    public void insertTreatment(Treatment treatmentIn) {
    
-      String sql = "INSERT INTO Treatment(firstName, lastName, treatmentType,"
+      String sql = "INSERT INTO Treatment(ptLastName, docLastName, treatmentType,"
                + " treatment, treatmentDate)"
                + " VALUES (?, ?, ?, ?, ?);";
    
@@ -336,6 +359,26 @@ public class DatabaseSQL {
       
       } catch (SQLException e) {
          System.out.println(e.getMessage());
+         e.printStackTrace();
+      }   
+   }
+   
+   public void insertDiag(Diagnosis diagIn) {
+   
+      String sql = "INSERT INTO Diagnosis(diagnosisID, diagnosisName, patientID)"
+               + " VALUES (?, ?, ?);";
+   
+      try (Connection conn = this.connect();) {
+         PreparedStatement ps = conn.prepareStatement(sql);
+         ps.setInt(1, diagIn.diagID);
+         ps.setString(2, diagIn.diagName);
+         ps.setInt(3, diagIn.patientID);
+         ps.executeUpdate();
+         ps.close();
+      
+      } catch (SQLException e) {
+         System.out.println(e.getMessage());
+         e.printStackTrace();
       }   
    }
 }

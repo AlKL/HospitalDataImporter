@@ -3,6 +3,8 @@ import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.File;
 import java.util.NoSuchElementException;
+import java.util.HashMap;
+
 
 public class DataImporter {
 
@@ -13,6 +15,10 @@ public class DataImporter {
    public Employee[] employeeList;
    int patientID;
    
+   public static HashMap<String, Integer> diagMap;
+   public Diagnosis[] diagList;
+   public static int diagID;
+   
    //constructor
    public DataImporter() {
       patientList = new Patient[0];
@@ -20,12 +26,17 @@ public class DataImporter {
       treatmentList = new Treatment[0];
       employeeList = new Employee[0];
       patientID = 1001;
+      diagID = 50001;
+      diagList = new Diagnosis[0];
+      diagMap = new HashMap<String, Integer>();
    }
    
    public void readHospitalFile(String fileName) 
                                        throws FileNotFoundException {  
       Scanner scanFile = new Scanner(new File(fileName));
       Scanner scanChecker = new Scanner(new File(fileName));
+      
+      
       
       //check file type - hospitalInfo or treatmentInfo
       String line0 = scanChecker.nextLine().trim();
@@ -53,6 +64,15 @@ public class DataImporter {
                      String iniDiagnosis = wordScan.next().trim();
                      String admissionDate = wordScan.next().trim();
                      String dischargeDate = wordScan.next().trim();
+                  
+                  
+                  
+                     int diagIDCheck = addDiagToMap(iniDiagnosis);
+                     Diagnosis d = new Diagnosis(iniDiagnosis, diagIDCheck, patientID);
+                     addDiag(d); 
+                     
+                     
+                     
                      
                      if (roomNo > 0) {
                         Patient p = new Patient(patientID, firstName, lastName, roomNo,
@@ -133,6 +153,22 @@ public class DataImporter {
    public void addTreatment(Treatment treatmentIn) {
       treatmentList = Arrays.copyOf(treatmentList, treatmentList.length + 1);
       treatmentList[treatmentList.length - 1] = treatmentIn;
+   }
+   
+   public void addDiag(Diagnosis diagIn) {
+      diagList = Arrays.copyOf(diagList, diagList.length + 1);
+      diagList[diagList.length - 1] = diagIn;
+   }
+   
+   public static int addDiagToMap(String iniDiagnosis) {
+      boolean flag = diagMap.containsKey(iniDiagnosis);
+      if (flag == false) {
+         diagMap.put(iniDiagnosis, diagID);
+         int currDiagID = diagID;
+         diagID++;
+         return currDiagID;
+      }
+      return diagMap.get(iniDiagnosis);
    }
    
    public String toString() {

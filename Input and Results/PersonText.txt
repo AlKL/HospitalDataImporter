@@ -3,7 +3,7 @@ D,Pascal,Siakam,,,,,,,,,
 D,Kyle,Lowry,,,,,,,,,
 D,Fred,Vanvleet,,,,,,,,,
 P,Daniel,House,0,,,,,Nurse,Broken Foot,,,
-P,Fussell,Westbrook,4,Liz Jones,334-555-1234,INS123,INS Company,Nurse,Broken Arm,3-19-2019,3-20-2020
+P,Fussell,Westbrook,4,Liz Jones,334-555-1234,INS123,INS Company,Nurse,Broken Foot,3-19-2019,3-20-2020
 P,PJ,Tucker,1,Liz Jones,334-555-1234,INS123,INS Company,Siakam,Broken Arm,3-19-2019,3-20-2020
 P,James,Harden,2,Liz Jones,334-555-1234,INS123,INS Company,Lowry,Broken Arm,3-19-2019,3-20-2020
 P,Eric,Gordon,3,Liz Jones,334-555-1234,INS123,INS Company,Vanvleet,Broken Arm,3-19-2019,3-20-2020

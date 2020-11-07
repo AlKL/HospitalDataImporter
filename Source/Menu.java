@@ -66,8 +66,12 @@ public class Menu {
                      app.insertInPatient(hospitalData.inPatientList[i]);
                   }
                   
+               //insert all diagnosis from diagnosis array
+                  for (int i = 0; i < hospitalData.diagList.length; i++) {
+                     app.insertDiag(hospitalData.diagList[i]);
+                  } 
+                                      
                   System.out.println("Person text file inserted into database.");
-               
                   break;
                case 'T':
                   app.dropTreatment();
@@ -87,10 +91,7 @@ public class Menu {
                default:
                   System.out.println("\t*** invalid entry ***\n");  
             }
-         } while (!code.equalsIgnoreCase("Q"));   
-      
-      
-                  
+         } while (!code.equalsIgnoreCase("Q"));           
       }
       //catch and trace exceptions
       catch (Exception e) {
