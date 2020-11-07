@@ -136,6 +136,7 @@ public class DatabaseSQL {
    public void createTreatmentTable() {
    
       String sql = "CREATE TABLE IF NOT EXISTS Treatment (\n"
+                + "  treatmentID integer, \n"
                 + "  ptLastName VARCHAR(50) PRIMARY KEY, \n"
                 + "  docLastName VARCHAR(50), \n"
                 + "  treatmentType VARCHAR(1), \n"
@@ -343,17 +344,18 @@ public class DatabaseSQL {
          
    public void insertTreatment(Treatment treatmentIn) {
    
-      String sql = "INSERT INTO Treatment(ptLastName, docLastName, treatmentType,"
+      String sql = "INSERT INTO Treatment(treatmentID, ptLastName, docLastName, treatmentType,"
                + " treatment, treatmentDate)"
-               + " VALUES (?, ?, ?, ?, ?);";
+               + " VALUES (?, ?, ?, ?, ?, ?);";
    
       try (Connection conn = this.connect();) {
          PreparedStatement ps = conn.prepareStatement(sql);
-         ps.setString(1, treatmentIn.ptLastName);
-         ps.setString(2, treatmentIn.docLastName);
-         ps.setString(3, String.valueOf(treatmentIn.treatType));
-         ps.setString(4, treatmentIn.treatment);
-         ps.setString(5, treatmentIn.treatmentDate);
+         ps.setInt(1, treatmentIn.treatmentID);
+         ps.setString(2, treatmentIn.ptLastName);
+         ps.setString(3, treatmentIn.docLastName);
+         ps.setString(4, String.valueOf(treatmentIn.treatType));
+         ps.setString(5, treatmentIn.treatment);
+         ps.setString(6, treatmentIn.treatmentDate);
          ps.executeUpdate();
          ps.close();
       

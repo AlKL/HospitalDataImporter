@@ -11,9 +11,12 @@ public class DataImporter {
    //need to make proper methods for these so that they can be private 
    public Patient[] patientList;
    public Patient[] inPatientList;
-   public Treatment[] treatmentList;
    public Employee[] employeeList;
    int patientID;
+   
+   public static int treatmentID;
+   public static HashMap<String, Integer> treatMap;
+   public Treatment[] treatmentList;
    
    public static HashMap<String, Integer> diagMap;
    public Diagnosis[] diagList;
@@ -23,9 +26,14 @@ public class DataImporter {
    public DataImporter() {
       patientList = new Patient[0];
       inPatientList = new Patient[0];
+      
       treatmentList = new Treatment[0];
+      treatmentID = 70001;
+      treatMap = new HashMap<String, Integer>();
+      
       employeeList = new Employee[0];
       patientID = 1001;
+      
       diagID = 50001;
       diagList = new Diagnosis[0];
       diagMap = new HashMap<String, Integer>();
@@ -35,9 +43,7 @@ public class DataImporter {
                                        throws FileNotFoundException {  
       Scanner scanFile = new Scanner(new File(fileName));
       Scanner scanChecker = new Scanner(new File(fileName));
-      
-      
-      
+   
       //check file type - hospitalInfo or treatmentInfo
       String line0 = scanChecker.nextLine().trim();
       Scanner wordScan0 = new Scanner(line0).useDelimiter(",");
@@ -121,7 +127,10 @@ public class DataImporter {
                Character treatType = wordScan.next().toUpperCase().trim().charAt(0);
                String treat = wordScan.next().trim();
                String treatDate = wordScan.next().trim();
-               Treatment t = new Treatment(treatFirstName, treatLastName, treatType,
+               
+               
+               int treatIDCheck = addTreatToMap(treat);
+               Treatment t = new Treatment(treatIDCheck, treatFirstName, treatLastName, treatType,
                                              treat, treatDate);
                addTreatment(t);
                continue;
@@ -159,6 +168,17 @@ public class DataImporter {
       diagList = Arrays.copyOf(diagList, diagList.length + 1);
       diagList[diagList.length - 1] = diagIn;
    }
+        
+   public static int addTreatToMap(String treat) {
+      boolean flag = treatMap.containsKey(treat);
+      if (flag == false) {
+         treatMap.put(treat, treatmentID);
+         int currTreatID = treatmentID;
+         treatmentID++;
+         return currTreatID;
+      }
+      return treatMap.get(treat);
+   } 
    
    public static int addDiagToMap(String iniDiagnosis) {
       boolean flag = diagMap.containsKey(iniDiagnosis);
