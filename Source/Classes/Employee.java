@@ -1,3 +1,5 @@
+package Classes;
+
 public class Employee {
    protected String firstName;
    protected String lastName;
@@ -7,6 +9,18 @@ public class Employee {
       firstName = firstNameIn;
       lastName = lastNameIn;
       jobCat = jobCatIn;
+   }
+
+   public Character getJobCat() {
+      return jobCat;
+   }
+
+   public String getFirstName() {
+      return firstName;
+   }
+
+   public String getLastName() {
+      return lastName;
    }
 
    public String toString() {

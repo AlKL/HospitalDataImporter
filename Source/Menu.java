@@ -1,3 +1,5 @@
+import JavaQueries.DatabaseSQL;
+
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 

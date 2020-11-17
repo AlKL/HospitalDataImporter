@@ -1,4 +1,8 @@
+package JavaQueries;
+
 import JavaQueries.Tables;
+import Classes.*;
+
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -146,8 +150,8 @@ public class DatabaseSQL {
    
    public void insertEmployee(Employee employeeIn) {
    
-      Character jobCat = employeeIn.jobCat;
-      String jobCharToString = employeeIn.jobCat.toString();
+      Character jobCat = employeeIn.getJobCat();
+      String jobCharToString = jobCat.toString();
       String profession;
    
       String sql = "INSERT INTO Employee(firstName, lastName, jobCategory)"
@@ -155,8 +159,8 @@ public class DatabaseSQL {
                
       try (Connection conn = this.connect();) {
          PreparedStatement ps = conn.prepareStatement(sql);
-         ps.setString(1, employeeIn.firstName);
-         ps.setString(2, employeeIn.lastName);  
+         ps.setString(1, employeeIn.getFirstName());
+         ps.setString(2, employeeIn.getLastName());
          ps.setString(3, jobCharToString);  
          ps.executeUpdate();
          
@@ -198,8 +202,8 @@ public class DatabaseSQL {
       
       try (Connection conn = this.connect();) {
          PreparedStatement ps = conn.prepareStatement(sql);
-         ps.setString(1, employeeIn.firstName);
-         ps.setString(2, employeeIn.lastName);
+         ps.setString(1, employeeIn.getFirstName());
+         ps.setString(2, employeeIn.getLastName());
          ps.executeUpdate();
          ps.close();
          
@@ -217,24 +221,24 @@ public class DatabaseSQL {
    //updates Rooms table when new in-patient is inserted            
       String update = "UPDATE Rooms"
                   + " SET roomOcc = 1"
-                  + " WHERE roomNumber = " + patientIn.roomNo + ";";
+                  + " WHERE roomNumber = " + patientIn.getRoomNo() + ";";
                   
       try (Connection conn = this.connect();) {
          PreparedStatement ps = conn.prepareStatement(sql);
          Statement stmt  = conn.createStatement();
          
-         ps.setInt(1, patientIn.patientID);
-         ps.setString(2, patientIn.firstName);
-         ps.setString(3, patientIn.lastName);          
-         ps.setInt(4, patientIn.roomNo);
-         ps.setString(5, patientIn.emergContact);
-         ps.setString(6, patientIn.emergNo);
-         ps.setString(7, patientIn.insPolicy);
-         ps.setString(8, patientIn.insPolicyNo);
-         ps.setString(9, patientIn.docLastName);
-         ps.setString(10, patientIn.iniDiagnosis);
-         ps.setString(11, patientIn.admissionDate);
-         ps.setString(12, patientIn.dischargeDate); 
+         ps.setInt(1, patientIn.getPatientID());
+         ps.setString(2, patientIn.getFirstName());
+         ps.setString(3, patientIn.getLastName());
+         ps.setInt(4, patientIn.getRoomNo());
+         ps.setString(5, patientIn.getEmergContact());
+         ps.setString(6, patientIn.getEmergNo());
+         ps.setString(7, patientIn.getInsPolicy());
+         ps.setString(8, patientIn.getInsPolicyNo());
+         ps.setString(9, patientIn.getDocLastName());
+         ps.setString(10, patientIn.getIniDiagnosis());
+         ps.setString(11, patientIn.getAdmissionDate());
+         ps.setString(12, patientIn.getDischargeDate());
                  
          ps.executeUpdate();
          stmt.execute(update); 
@@ -254,11 +258,11 @@ public class DatabaseSQL {
       try (Connection conn = this.connect();) {
          PreparedStatement ps = conn.prepareStatement(sql);
          
-         ps.setInt(1, patientIn.patientID);
-         ps.setString(2, patientIn.firstName);
-         ps.setString(3, patientIn.lastName);          
-         ps.setString(4, patientIn.docLastName);
-         ps.setString(5, patientIn.iniDiagnosis);
+         ps.setInt(1, patientIn.getPatientID());
+         ps.setString(2, patientIn.getFirstName());
+         ps.setString(3, patientIn.getLastName());
+         ps.setString(4, patientIn.getDocLastName());
+         ps.setString(5, patientIn.getIniDiagnosis());
                  
          ps.executeUpdate();
          ps.close();
@@ -277,12 +281,12 @@ public class DatabaseSQL {
    
       try (Connection conn = this.connect();) {
          PreparedStatement ps = conn.prepareStatement(sql);
-         ps.setInt(1, treatmentIn.treatmentID);
-         ps.setString(2, treatmentIn.ptLastName);
-         ps.setString(3, treatmentIn.docLastName);
-         ps.setString(4, String.valueOf(treatmentIn.treatType));
-         ps.setString(5, treatmentIn.treatment);
-         ps.setString(6, treatmentIn.treatmentDate);
+         ps.setInt(1, treatmentIn.getTreatmentID());
+         ps.setString(2, treatmentIn.getPtLastName());
+         ps.setString(3, treatmentIn.getDocLastName());
+         ps.setString(4, String.valueOf(treatmentIn.getTreatType()));
+         ps.setString(5, treatmentIn.getTreatment());
+         ps.setString(6, treatmentIn.getTreatmentDate());
          ps.executeUpdate();
          ps.close();
       
@@ -299,9 +303,9 @@ public class DatabaseSQL {
    
       try (Connection conn = this.connect();) {
          PreparedStatement ps = conn.prepareStatement(sql);
-         ps.setInt(1, diagIn.diagID);
-         ps.setString(2, diagIn.diagName);
-         ps.setInt(3, diagIn.patientID);
+         ps.setInt(1, diagIn.getDiagID());
+         ps.setString(2, diagIn.getDiagName());
+         ps.setInt(3, diagIn.getPatientID());
          ps.executeUpdate();
          ps.close();
       

@@ -1,8 +1,9 @@
+package Classes;
 
 public class Diagnosis {
-   int diagID;
-   String diagName;
-   int patientID;
+   protected int diagID;
+   protected String diagName;
+   protected int patientID;
    
    /** 
    Constructor - takes diagnosis name and assigns diagnosis ID
@@ -12,6 +13,11 @@ public class Diagnosis {
       diagID = diagIDIn;
       patientID = ptIDIn;
    }
+
+   public int getDiagID() { return diagID; }
+   public String getDiagName() { return diagName; }
+   public int getPatientID() { return patientID; }
+
    
    /** 
    Check to see if diagnosis is already in tree, if not then

@@ -1,3 +1,5 @@
+package Classes;
+
 public class Doctor extends Employee {
 
    public Doctor (String firstNameIn, String lastNameIn, Character personTypeIn) {

@@ -1,3 +1,5 @@
+package Classes;
+
 public abstract class Person implements Comparable<Person> {
    protected int patientID;
    protected String type;
