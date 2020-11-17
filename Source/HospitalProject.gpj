@@ -12,28 +12,30 @@ s#i0
 s#k0/Users/alexandrekhien/Google Drive/0 - Computer Science/Auburn/CPSC5133 Database 2/sqlite/sqlite-jdbc-3.27.2.1.jar\000
 s#j0/Users/alexandrekhien/Google Drive/0 - Computer Science/Auburn/CPSC5133 Database 2/sqlite/sqlite-jdbc-3.27.2.1.jar
 s#l0
-!342;g
+!385;g
 %\011Classes%sDoctor.java
 %\011Classes%sPerson.java
+%\011JavaQueries%sTables.java
 %\011Classes%sTechnician.java
 %\011Classes%sAdministrator.java
 %\011Classes%sDiagnosis.java
-%\011DatabaseSQL.java
 %\011DataImporter.java
+%\011JavaQueries%sDatabaseSQL.java
 %\011Classes%sPatient.java
 %\011Classes%sNurse.java
 %\011Classes%sVolunteer.java
 %\011Classes%sTreatment.java
 %\011Menu.java
 %\011Classes%sEmployee.java
-!342;f
+!385;f
 %\011Classes%sDoctor.java
 %\011Classes%sPerson.java
+%\011JavaQueries%sTables.java
 %\011Classes%sTechnician.java
 %\011Classes%sAdministrator.java
 %\011Classes%sDiagnosis.java
-%\011DatabaseSQL.java
 %\011DataImporter.java
+%\011JavaQueries%sDatabaseSQL.java
 %\011Classes%sPatient.java
 %\011Classes%sNurse.java
 %\011Classes%sVolunteer.java

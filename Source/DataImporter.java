@@ -9,22 +9,24 @@ import java.util.HashMap;
 public class DataImporter {
 
    //need to make proper methods for these so that they can be private 
-   public Patient[] patientList;
    public Patient[] inPatientList;
    public Employee[] employeeList;
-   int patientID;
+   
+   public static int patientID;
+   public Patient[] patientList;
    
    public static int treatmentID;
    public static HashMap<String, Integer> treatMap;
    public Treatment[] treatmentList;
    
+   public static int diagID;
    public static HashMap<String, Integer> diagMap;
    public Diagnosis[] diagList;
-   public static int diagID;
    
    //constructor
    public DataImporter() {
       patientList = new Patient[0];
+      patientID = 1001;         
       inPatientList = new Patient[0];
       
       treatmentList = new Treatment[0];
@@ -32,7 +34,6 @@ public class DataImporter {
       treatMap = new HashMap<String, Integer>();
       
       employeeList = new Employee[0];
-      patientID = 1001;
       
       diagID = 50001;
       diagList = new Diagnosis[0];
@@ -71,16 +72,11 @@ public class DataImporter {
                      String admissionDate = wordScan.next().trim();
                      String dischargeDate = wordScan.next().trim();
                   
-                  
-                  
                      int diagIDCheck = addDiagToMap(iniDiagnosis);
                      Diagnosis d = new Diagnosis(iniDiagnosis, diagIDCheck, patientID);
                      addDiag(d); 
-                     
-                     
-                     
-                     
                      if (roomNo > 0) {
+                     
                         Patient p = new Patient(patientID, firstName, lastName, roomNo,
                                     emergContact, emergNo,insPolicy, insPolicyNo, docLastName,
                                     iniDiagnosis, admissionDate, dischargeDate);
@@ -94,6 +90,7 @@ public class DataImporter {
                         Patient p = new Patient(patientID, firstName, lastName, docLastName, iniDiagnosis);
                         addPatient(p);
                         patientID++;
+                     
                         continue;
                      }
                   

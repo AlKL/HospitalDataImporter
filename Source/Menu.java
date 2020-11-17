@@ -26,7 +26,6 @@ public class Menu {
          DatabaseSQL app = new DatabaseSQL();
          app.connect();
          
-         
       //Check whether file is PersonList or TreatmentList
          Scanner userInput = new Scanner(System.in);
          
