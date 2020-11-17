@@ -1,0 +1,9 @@
+
+Functionality to add:
+- Implement DATETIME function
+- Fix DATETIME SQL queries
+- Figure out BETWEEN function
+- Make a new database upon running the program
+- Make it print to Excel
+- AVG, MIN, MAX DATETIME queries 
+- Change patient constructor to include In-Patient / discharged patients / adjust rooms occupied
