@@ -31,29 +31,57 @@ public class Tables {
                 + "  patientID integer PRIMARY KEY NOT NULL, \n"
                 + "  firstName VARCHAR(50) NOT NULL, \n"
                 + "  lastName VARCHAR(50) NOT NULL, \n"
-                + "  primaryDoctorLastName VARCHAR(50) NOT NULL, \n"
-                + "  iniDiagnosis VARCHAR(100) NOT NULL \n"
-                + ");";    
+                + "  primaryDoctorLastName VARCHAR(50) NOT NULL \n"
+                + ");";
+   }
+
+   public static String outPatient() {
+      return "CREATE TABLE IF NOT EXISTS OutPatient(\n"
+              + "  patientID integer PRIMARY KEY NOT NULL, \n"
+              + "  primaryDoctorLastName VARCHAR(50) NOT NULL, "
+              + "  iniDiagnosis VARCHAR(50) NOT NULL"
+              + ");";
    }
    
    public static String inPatient() {
       return "CREATE TABLE IF NOT EXISTS InPatient (\n"
-                + "  patientID integer PRIMARY KEY NOT NULL, \n"
+                + "  inPtNo integer PRIMARY KEY NOT NULL, \n"
+                + "  patientID integer NOT NULL, \n"
                 + "  firstName VARCHAR(50) NOT NULL, \n"
                 + "  lastName VARCHAR(50) NOT NULL, \n"
-                + "	roomNumber integer UNIQUE, \n"
+                + "	 roomNumber integer, \n"
                 + "  emergencyContact VARCHAR(100), \n"
                 + "  emergencyNumber  VARCHAR(100), \n"
                 + "  insPolicy VARCHAR(100), \n"
                 + "  insPolicyNo VARCHAR(100), \n"
                 + "  primaryDoctorLastName VARCHAR(50) NOT NULL, \n"
                 + "  iniDiagnosis VARCHAR(100) NOT NULL, \n"
-                + "  admissionDate VARCHAR(100) NOT NULL, \n"
-                + "  dischargeDate VARCHAR(100), \n"
-                + "  FOREIGN KEY (patientID) REFERENCES Patient (patientID), \n"
-                + "  FOREIGN KEY (primaryDoctorLastName) REFERENCES Doctor (lastName), \n"
-                + "  FOREIGN KEY (roomNumber) REFERENCES Rooms (roomNumber) \n"
-                + ");";    
+                + "  admissionDate TEXT, \n"
+                + "  dischargeDate TEXT \n"
+                //+ "  FOREIGN KEY (patientID) REFERENCES Patient (patientID), \n"
+                //+ "  FOREIGN KEY (primaryDoctorLastName) REFERENCES Doctor (lastName) \n"
+                //+ "  FOREIGN KEY (roomNumber) REFERENCES Rooms (roomNumber) \n"
+                + ");";
+   }
+
+   public static String currentInPatient() {
+      return "CREATE TABLE IF NOT EXISTS currentInPatient (\n"
+              + "  inPtNo integer PRIMARY KEY NOT NULL, \n"
+              + "  patientID integer NOT NULL, \n"
+              + "  firstName VARCHAR(50) NOT NULL, \n"
+              + "  lastName VARCHAR(50) NOT NULL, \n"
+              + "  roomNumber integer UNIQUE, \n"
+              + "  emergencyContact VARCHAR(100), \n"
+              + "  emergencyNumber  VARCHAR(100), \n"
+              + "  insPolicy VARCHAR(100), \n"
+              + "  insPolicyNo VARCHAR(100), \n"
+              + "  primaryDoctorLastName VARCHAR(50) NOT NULL, \n"
+              + "  iniDiagnosis VARCHAR(100) NOT NULL, \n"
+              + "  admissionDate TEXT NOT NULL \n"
+              //+ "  FOREIGN KEY (patientID) REFERENCES Patient (patientID), \n"
+              //+ "  FOREIGN KEY (primaryDoctorLastName) REFERENCES Doctor (lastName), \n"
+              //+ "  FOREIGN KEY (roomNumber) REFERENCES Rooms (roomNumber) \n"
+              + ");";
    }
    
    public static String treatment() {
@@ -66,6 +94,7 @@ public class Tables {
                 + "  treatmentDate TEXT \n"
                 + ");"; 
    }
+
          
    //////////////////////////////////////////////////////////////
    //Create diagnosis array//////////////////////////////////////
@@ -73,9 +102,9 @@ public class Tables {
    public static String diagnosis() {
       return "CREATE TABLE IF NOT EXISTS Diagnosis (\n"
                 + "  diagnosisID integer, \n"
-                + "  diagnosisName VARCHAR(100), \n"
-                + "  patientID integer PRIMARY KEY, \n"
-                + "  FOREIGN KEY (patientID) REFERENCES Patient (patientID) \n"
+                + "  diagnosisName VARCHAR(100) \n"
+                //+ "  patientID integer \n"
+                //+ "  FOREIGN KEY (patientID) REFERENCES Patient (patientID) \n"
                 + ");"; 
    }
 }

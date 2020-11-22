@@ -5,13 +5,11 @@ public class Diagnosis {
    protected String diagName;
    protected int patientID;
    
-   /** 
-   Constructor - takes diagnosis name and assigns diagnosis ID
-   **/
-   public Diagnosis(String diagNameIn, int diagIDIn, int ptIDIn) {
+   /** Constructor - takes diagnosis name and assigns diagnosis ID **/
+   public Diagnosis(String diagNameIn, int diagIDIn) {
       diagName = diagNameIn;
       diagID = diagIDIn;
-      patientID = ptIDIn;
+      //patientID = ptIDIn;
    }
 
    public int getDiagID() { return diagID; }

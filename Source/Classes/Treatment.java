@@ -9,6 +9,11 @@ public class Treatment {
    protected String treatment;
    protected String treatmentDate;
 
+   public Treatment(String treatmentIn, int treatmentIDIn) {
+      treatmentID = treatmentIDIn;
+      treatment = treatmentIn;
+   }
+
    public Treatment(int treatmentIDIn, String ptNameIn, String docNameIn, Character typeIn,
                      String treatmentIn, String treatmentDateIn) {
       treatmentID = treatmentIDIn;

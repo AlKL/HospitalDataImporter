@@ -1,7 +1,7 @@
 import JavaQueries.DatabaseSQL;
 
 import java.util.Scanner;
-import java.io.FileNotFoundException;
+//import java.io.FileNotFoundException;
 
 public class Menu {
 
@@ -52,21 +52,31 @@ public class Menu {
                   app.dropAllTables();
                   app.createAllTables();
                            
-               //insert all employeess from employee array
+                 //insert all employees from employee array
                   for (int i = 0; i < hospitalData.employeeList.length; i++) {
                      app.insertEmployee(hospitalData.employeeList[i]);
                   }
                
-               //insert all patients from patient array
+                 //insert all patients from patient array
                   for (int i = 0; i < hospitalData.patientList.length; i++) {
                      app.insertPatient(hospitalData.patientList[i]);
                   }
                      
-               //insert all in-patients from patient array
+                 //insert all in-patients from patient array
                   for (int i = 0; i < hospitalData.inPatientList.length; i++) {
                      app.insertInPatient(hospitalData.inPatientList[i]);
                   }
-                  
+
+                  //insert all CURRENT in-patients from patient array
+                  for (int i = 0; i < hospitalData.currentInPatientList.length; i++) {
+                     app.insertCurrentInPatient(hospitalData.currentInPatientList[i]);
+                     app.updateRoom(hospitalData.currentInPatientList[i]);
+                  }
+
+                  //insert all out-patients from patient array
+                  for (int i = 0; i < hospitalData.outPatientList.length; i++) {
+                     app.insertOutPatient(hospitalData.outPatientList[i]);
+                  }
                //insert all diagnosis from diagnosis array
                   for (int i = 0; i < hospitalData.diagList.length; i++) {
                      app.insertDiag(hospitalData.diagList[i]);
@@ -77,6 +87,11 @@ public class Menu {
                case 'T':
                   app.dropTreatment();
                   app.createTreatmentTable();
+                  app.createAllTreatment();
+
+                  for (int i = 0; i < hospitalData.allTreatmentList.length; i++) {
+                     app.insertAllTreatment(hospitalData.allTreatmentList[i]);
+                  }
                   
                //insert all treatments from treatment array
                   for (int i = 0; i < hospitalData.treatmentList.length; i++) {
@@ -99,7 +114,6 @@ public class Menu {
          System.out.println(e + "*** Exception thrown");
          e.printStackTrace();
          System.out.print("Program ending.");
-         return;
       }
    }
    

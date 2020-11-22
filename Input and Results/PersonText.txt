@@ -3,11 +3,26 @@ D,Pascal,Siakam,,,,,,,,,
 D,Kyle,Lowry,,,,,,,,,
 D,Fred,Vanvleet,,,,,,,,,
 P,Daniel,House,0,,,,,Nurse,Broken Foot,,,
-P,Fussell,Westbrook,4,Liz Jones,334-555-1234,INS123,INS Company,Nurse,Broken Foot,2019-1-1,2019-6-1
-P,PJ,Tucker,1,Liz Jones,334-555-1234,INS123,INS Company,Siakam,Broken Arm,2019-1-1,2019-6-1
-P,James,Harden,2,Liz Jones,334-555-1234,INS123,INS Company,Lowry,Broken Arm,2020-1-1,2020-6-1
-P,Eric,Gordon,3,Liz Jones,334-555-1234,INS123,INS Company,Vanvleet,Broken Arm,2020-1-1,2020-6-1
-P,Gerald,Green,5,Liz Jones,334-555-1234,INS123,INS Company,Vanvleet,Broken Arm,2020-1-1,2020-6-1
+P,Robert,Covington,0,,,,,Lowry,Broken Arm,,,
+P,Austin,Rivers,0,,,,,Lowry,Vomitting,,,
+P,PJ,Tucker,0,,,,,Lowry,Vomitting,,,
+P,Fussell,Westbrook,0,,,,,Lowry,Broken Chin,,,
+P,Fussell,Westbrook,3,Liz Jones,334-555-1234,INS123,INS Company,Nurse,Broken Foot,2020-01-01,2020-02-01
+P,Fussell,Westbrook,3,Liz Jones,334-555-1234,INS123,INS Company,Nurse,Broken Arm,2020-02-15,2020-04-01
+P,Fussell,Westbrook,3,Liz Jones,334-555-1234,INS123,INS Company,Nurse,Achilles,2020-05-01,2020-07-20
+P,Fussell,Westbrook,3,Liz Jones,334-555-1234,INS123,INS Company,Nurse,Achilles,2020-08-01,,
+P,PJ,Tucker,1,Liz Jones,334-555-1234,INS123,INS Company,Siakam,Tore ACL,2019-01-01,2019-02-01
+P,PJ,Tucker,1,Liz Jones,334-555-1234,INS123,INS Company,Siakam,Tore ACL,2019-02-15,2019-10-18
+P,PJ,Tucker,1,Liz Jones,334-555-1234,INS123,INS Company,Siakam,Tore ACL,2019-11-01,,
+P,Yao,Ming,5,Liz Jones,334-555-1234,INS123,INS Company,Lowry,Tore ACL,2019-01-01,2019-02-01
+P,Yao,Ming,5,Liz Jones,334-555-1234,INS123,INS Company,Lowry,Tore ACL,2019-02-15,2019-04-01
+P,Yao,Ming,5,Liz Jones,334-555-1234,INS123,INS Company,Lowry,Vomitting,2019-11-01,,
+P,James,Harden,2,Liz Jones,334-555-1234,INS123,INS Company,Lowry,Broken Arm,2020-01-01,2020-03-01
+P,James,Harden,2,Liz Jones,334-555-1234,INS123,INS Company,Lowry,Broken Arm,2020-09-01,,
+P,Eric,Gordon,7,Liz Jones,334-555-1234,INS123,INS Company,Vanvleet,Broken Arm,2020-03-01,2020-08-01
+P,Eric,Gordon,7,Liz Jones,334-555-1234,INS123,INS Company,Vanvleet,Broken Arm,2020-09-01,,
+P,Gerald,Green,5,Liz Jones,334-555-1234,INS123,INS Company,Vanvleet,Broken Arm,2020-01-01,2020-03-01
+P,Tracy,McGrady,13,Liz Jones,334-555-1234,INS123,INS Company,Vanvleet,Broken Arm,2020-01-01,2020-03-01
 N,Stephen,Curry,,,,,,,,,
 N,Klay,Thompson,,,,,,,,,
 N,Draymond,Green,,,,,,,,,
