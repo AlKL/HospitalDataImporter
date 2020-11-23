@@ -2,10 +2,10 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.File;
-import java.util.NoSuchElementException;
 import java.util.HashMap;
 import Classes.*;
 import JavaQueries.DatabaseSQL;
+import java.util.NoSuchElementException;
 
 public class DataImporter {
    //Instance Variables
@@ -23,32 +23,37 @@ public class DataImporter {
 
    // Variables for Diagnosis'
    private static HashMap<String, Integer> diagMap;   //tracks new diagnosis names and ID
-   private Diagnosis[] diagList;                      //tracks all diagnosis
    private static int diagID;                         //tracks diagnosisID
+   private Diagnosis[] diagList;                      //tracks all diagnosis
 
    // Variables for Treatments
    private static HashMap<String, Integer> treatMap;  //tracks new treatment names and ID
    private static int treatmentID;                    //tracks treatmentID
-   private Treatment[] treatmentList;                 //
+   private Treatment[] treatmentList;                 //tracks all treatments administered
 
    //constructor
    public DataImporter() {
+      ptMap = new HashMap<>();
+      patientID = 1001;                               //patientID begins at 1,001
+      inPatientNo = 300;                              //inPatientID begins at 300
       patientList = new Patient[0];
-      patientID = 1001;         
       inPatientList = new Patient[0];
       currentInPatientList = new Patient[0];
-      inPatientNo = 300;
-      ptMap = new HashMap<>();
       outPatientList = new Patient[0];
-      treatmentList = new Treatment[0];
-      treatmentID = 70001;
-      treatMap = new HashMap<>();
+
       employeeList = new Employee[0];
-      diagID = 50001;
-      diagList = new Diagnosis[0];
+
       diagMap = new HashMap<>();
+      diagID = 50001;                                 //diagnosisID begins at 50,001
+      diagList = new Diagnosis[0];
+
+      treatMap = new HashMap<>();
+      treatmentID = 70001;                            //treatmentID begins at 70,001
+      treatmentList = new Treatment[0];
+
    }
 
+   //Reads in the text file and imports it into the database
    public void readHospitalFile(String fileName) 
                                        throws FileNotFoundException {  
       Scanner scanFile = new Scanner(new File(fileName));
@@ -58,11 +63,12 @@ public class DataImporter {
       DatabaseSQL database = new DatabaseSQL();
       connectToDatabase(database);
 
-      //check file type - hospitalInfo or treatmentInfo
+      //check file type - Person vs Treatment
       String line0 = scanChecker.nextLine().trim();
       Scanner wordScan0 = new Scanner(line0).useDelimiter(",");
       String firstWord = wordScan0.next().trim();
-      
+
+      //Person file inserted
       if (firstWord.length() == 1) {
          while (scanFile.hasNext()) {
             String line1 = scanFile.nextLine().trim();
@@ -270,17 +276,6 @@ public class DataImporter {
       diagList = Arrays.copyOf(diagList, diagList.length + 1);
       diagList[diagList.length - 1] = diagIn;
    }
-        
-   public static int addTreatToMap(String treat) {
-      boolean flag = treatMap.containsKey(treat);
-      if (!flag) {
-         treatMap.put(treat, treatmentID);
-         int currTreatID = treatmentID;
-         treatmentID++;
-         return currTreatID;
-      }
-      return treatMap.get(treat);
-   }
 
    public static int addTreatMap(String treatmentName) {
       treatMap.put(treatmentName, treatmentID);
@@ -307,7 +302,6 @@ public class DataImporter {
       return temp;
    }
 
-   
    public String toString() {
       String stringResult = "";
       for (Patient p : patientList) {
