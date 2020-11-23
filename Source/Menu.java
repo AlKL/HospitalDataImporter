@@ -26,6 +26,7 @@ public class Menu {
       //       INSERT PERSONS ARRAY INTO DATABASE
       //create database connection
          DatabaseSQL app = new DatabaseSQL();
+         app.createNewDatabase("database.sl3");
          app.connect();
          
       //Check whether file is PersonList or TreatmentList

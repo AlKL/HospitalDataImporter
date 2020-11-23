@@ -1,9 +1,8 @@
-
-Functionality to add:
-- Implement DATETIME function
-- Fix DATETIME SQL queries
-- Figure out BETWEEN function
-- Make a new database upon running the program
-- Make it print to Excel
-- AVG, MIN, MAX DATETIME queries 
-- Change patient constructor to include In-Patient / discharged patients / adjust rooms occupied
+In order:
+- Check the text files name, Persons vs Treatments
+- Create a full menu including the SQL queries
+- Re-introduce foreign keys
+- Refractor
+- Make the program print out to Excel
+- Update guidelines on the allowable input on the text file on the README
+- Add proper documentation 

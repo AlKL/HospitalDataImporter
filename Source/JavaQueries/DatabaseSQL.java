@@ -5,13 +5,33 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
+import java.sql.DatabaseMetaData;
 
 public class DatabaseSQL {
-   
+
+   //Create a new database if the file does not exist
+   public void createNewDatabase(String fileName) {
+      String url = "jdbc:sqlite:/Users/alexandrekhien/Google Drive/0 - Computer Science"
+              + "/Auburn/CPSC5133 Database 2/Hospital Project/Database/database.sl3";
+
+      try (Connection conn = DriverManager.getConnection(url)) {
+         if (conn != null) {
+            DatabaseMetaData meta = conn.getMetaData();
+            System.out.println("The driver name is " + meta.getDriverName());
+            System.out.println("A new database has been created.");
+         }
+
+      } catch (SQLException e) {
+         System.out.println(e.getMessage());
+      }
+
+   }
+
+   //Connects to database
    public Connection connect() {
         // SQLite connection string
       String url = "jdbc:sqlite:/Users/alexandrekhien/Google Drive/0 - Computer Science"
-                     + "/Auburn/CPSC5133 Database 2/Hospital Project/Database/HospitalDB.sl3"; 
+                     + "/Auburn/CPSC5133 Database 2/Hospital Project/Database/database.sl3";
       Connection conn = null;
       try {
          conn = DriverManager.getConnection(url);
@@ -140,7 +160,7 @@ public class DatabaseSQL {
    }
    
    public void dropTable(String tableIn) {
-      String sql = "DROP TABLE " + tableIn + ";";
+      String sql = "DROP TABLE IF EXISTS " + tableIn + ";";
       
       try (Connection conn = this.connect()) {
          Statement stmt  = conn.createStatement();
@@ -153,8 +173,8 @@ public class DatabaseSQL {
    }
    
    public void dropTreatment() {
-      String sql = "DROP TABLE Treatment;";
-      String sql2 = "DROP TABLE allTreatment";
+      String sql = "DROP TABLE IF EXISTS Treatment;";
+      String sql2 = "DROP TABLE IF EXISTS allTreatment";
       
       try (Connection conn = this.connect()) {
          Statement stmt  = conn.createStatement();
