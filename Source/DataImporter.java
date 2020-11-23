@@ -8,25 +8,29 @@ import Classes.*;
 import JavaQueries.DatabaseSQL;
 
 public class DataImporter {
+   //Instance Variables
+   // Variables for Patients
+   private static HashMap<String, Integer> ptMap;     //tracks new patients name and ID
+   private int inPatientNo;                           //tracks inPatient No
+   private static int patientID;                      //tracks patientID
+   private Patient[] patientList;                     //tracks all patients
+   private Patient[] inPatientList;                   //tracks all in-patients
+   private Patient[] currentInPatientList;            //tracks current in-patients
+   private Patient[] outPatientList;                  //tracks all out-patients
 
-   //need to make proper methods for these so that they can be private 
-   public Patient[] inPatientList;
-   public int inPatientNo;
-   public Employee[] employeeList;
-   public Patient[] currentInPatientList;
-   public Patient[] outPatientList;
-   public static HashMap<String, Integer> ptMap;
-   public static int patientID;
-   public Patient[] patientList;
-   public static HashMap<String, Integer> treatList;
-   public Treatment[] allTreatmentList;
-   public static int treatmentID;
-   public static HashMap<String, Integer> treatMap;
-   public Treatment[] treatmentList;
-   public static int diagID;
-   public static HashMap<String, Integer> diagMap;
-   public Diagnosis[] diagList;
-   
+   // Variables for Employees
+   private Employee[] employeeList;                   //tracks all employees
+
+   // Variables for Diagnosis'
+   private static HashMap<String, Integer> diagMap;   //tracks new diagnosis names and ID
+   private Diagnosis[] diagList;                      //tracks all diagnosis
+   private static int diagID;                         //tracks diagnosisID
+
+   // Variables for Treatments
+   private static HashMap<String, Integer> treatMap;  //tracks new treatment names and ID
+   private static int treatmentID;                    //tracks treatmentID
+   private Treatment[] treatmentList;                 //
+
    //constructor
    public DataImporter() {
       patientList = new Patient[0];
@@ -36,7 +40,6 @@ public class DataImporter {
       inPatientNo = 300;
       ptMap = new HashMap<>();
       outPatientList = new Patient[0];
-      allTreatmentList = new Treatment[0];
       treatmentList = new Treatment[0];
       treatmentID = 70001;
       treatMap = new HashMap<>();
@@ -162,8 +165,7 @@ public class DataImporter {
                //Create new treatment object for only treatments without persons
                boolean checkTreat = treatMap.containsKey(treat);
                if (!checkTreat) {
-                  t = new Treatment(treat, addTreatMap(treat));
-                  addAllTreatmentList(t);
+                  addTreatMap(treat);
                }
 
                //Then add the treatment to the Treatment table with assigned patient, doctor, etc
@@ -225,11 +227,6 @@ public class DataImporter {
    public void treatmentDatabaseOperations(DatabaseSQL databaseIn) {
       databaseIn.dropTreatment();
       databaseIn.createTreatmentTable();
-      databaseIn.createAllTreatment();
-
-      for (int i = 0; i < allTreatmentList.length; i++) {
-         databaseIn.insertAllTreatment(allTreatmentList[i]);
-      }
 
       //insert all treatments from treatment array
       for (int i = 0; i < treatmentList.length; i++) {
@@ -267,11 +264,6 @@ public class DataImporter {
    public void addTreatment(Treatment treatmentIn) {
       treatmentList = Arrays.copyOf(treatmentList, treatmentList.length + 1);
       treatmentList[treatmentList.length - 1] = treatmentIn;
-   }
-
-   public void addAllTreatmentList(Treatment treatmentIn) {
-      allTreatmentList = Arrays.copyOf(allTreatmentList, allTreatmentList.length + 1);
-      allTreatmentList[allTreatmentList.length - 1] = treatmentIn;
    }
    
    public void addDiag(Diagnosis diagIn) {

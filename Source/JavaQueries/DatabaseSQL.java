@@ -61,8 +61,7 @@ public class DatabaseSQL {
       String inPatient = Tables.inPatient();
       String outPatient = Tables.outPatient();
       String currentInPatient = Tables.currentInPatient();
-      createAllTreatment();
-      createTreatmentTable(); 
+      createTreatmentTable();
       String diagnosis = Tables.diagnosis();
        
       try (Connection conn = this.connect()) {
@@ -105,22 +104,6 @@ public class DatabaseSQL {
          System.out.println(e.getMessage());
          e.printStackTrace();
       }      
-   }
-
-   public void createAllTreatment() {
-      String sql = "CREATE TABLE IF NOT EXISTS allTreatment (\n"
-              + "  treatmentID integer, \n"
-              + "  treatment VARCHAR(50) \n"
-              + ");";
-
-      try (Connection conn = this.connect()) {
-         Statement stmt  = conn.createStatement();
-         stmt.execute(sql);
-         stmt.close();
-      } catch (SQLException e) {
-         System.out.println(e.getMessage());
-         e.printStackTrace();
-      }
    }
    
    /**
@@ -173,13 +156,11 @@ public class DatabaseSQL {
    
    public void dropTreatment() {
       String sql = "DROP TABLE IF EXISTS Treatment;";
-      String sql2 = "DROP TABLE IF EXISTS allTreatment";
-      
+
       try (Connection conn = this.connect()) {
          Statement stmt  = conn.createStatement();
          stmt.execute(sql);
-         stmt.execute(sql2);
-         stmt.close();         
+         stmt.close();
       } catch (SQLException e) {
          System.out.println(e.getMessage());
          e.printStackTrace();
@@ -400,23 +381,6 @@ public class DatabaseSQL {
          System.out.println(e.getMessage());
          e.printStackTrace();
       }   
-   }
-
-   public void insertAllTreatment(Treatment treatmentIn) {
-      String sql = "INSERT INTO allTreatment(treatmentID, treatment)"
-              + " VALUES (?, ?);";
-
-      try (Connection conn = this.connect()) {
-         PreparedStatement ps = conn.prepareStatement(sql);
-         ps.setInt(1, treatmentIn.getTreatmentID());
-         ps.setString(2, treatmentIn.getTreatment());
-         ps.executeUpdate();
-         ps.close();
-
-      } catch (SQLException e) {
-         System.out.println(e.getMessage());
-         e.printStackTrace();
-      }
    }
    
    public void insertDiag(Diagnosis diagIn) {
