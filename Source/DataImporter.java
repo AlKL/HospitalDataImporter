@@ -5,7 +5,7 @@ import java.io.File;
 import java.util.NoSuchElementException;
 import java.util.HashMap;
 import Classes.*;
-
+import JavaQueries.DatabaseSQL;
 
 public class DataImporter {
 
@@ -13,21 +13,16 @@ public class DataImporter {
    public Patient[] inPatientList;
    public int inPatientNo;
    public Employee[] employeeList;
-
    public Patient[] currentInPatientList;
    public Patient[] outPatientList;
-
    public static HashMap<String, Integer> ptMap;
    public static int patientID;
    public Patient[] patientList;
-
    public static HashMap<String, Integer> treatList;
    public Treatment[] allTreatmentList;
-
    public static int treatmentID;
    public static HashMap<String, Integer> treatMap;
    public Treatment[] treatmentList;
-   
    public static int diagID;
    public static HashMap<String, Integer> diagMap;
    public Diagnosis[] diagList;
@@ -41,24 +36,25 @@ public class DataImporter {
       inPatientNo = 300;
       ptMap = new HashMap<>();
       outPatientList = new Patient[0];
-
       allTreatmentList = new Treatment[0];
       treatmentList = new Treatment[0];
       treatmentID = 70001;
       treatMap = new HashMap<>();
-      
       employeeList = new Employee[0];
-      
       diagID = 50001;
       diagList = new Diagnosis[0];
       diagMap = new HashMap<>();
    }
-   
+
    public void readHospitalFile(String fileName) 
                                        throws FileNotFoundException {  
       Scanner scanFile = new Scanner(new File(fileName));
       Scanner scanChecker = new Scanner(new File(fileName));
-   
+
+      //Connect to Database
+      DatabaseSQL database = new DatabaseSQL();
+      connectToDatabase(database);
+
       //check file type - hospitalInfo or treatmentInfo
       String line0 = scanChecker.nextLine().trim();
       Scanner wordScan0 = new Scanner(line0).useDelimiter(",");
@@ -146,6 +142,8 @@ public class DataImporter {
                return;
             }
          }
+         //Person database operations
+         personDatabaseOperations(database);
       }
       //Treatment file inserted
       else {
@@ -179,8 +177,66 @@ public class DataImporter {
                return;
             } 
          }
+         //Treatment database operations
+         treatmentDatabaseOperations(database);
       }
-   
+   }
+
+   public void connectToDatabase(DatabaseSQL databaseIn) {
+      databaseIn.createNewDatabase("database.sl3");
+      databaseIn.connect();
+   }
+
+   public void personDatabaseOperations(DatabaseSQL databaseIn) {
+      databaseIn.dropAllTables();
+      databaseIn.createAllTables();
+
+      for (int i = 0; i < employeeList.length; i++) {
+         databaseIn.insertEmployee(employeeList[i]);
+      }
+
+      //insert all patients from patient array
+      for (int i = 0; i < patientList.length; i++) {
+         databaseIn.insertPatient(patientList[i]);
+      }
+
+      //insert all in-patients from patient array
+      for (int i = 0; i < inPatientList.length; i++) {
+         databaseIn.insertInPatient(inPatientList[i]);
+      }
+
+      //insert all CURRENT in-patients from patient array
+      for (int i = 0; i < currentInPatientList.length; i++) {
+         databaseIn.insertCurrentInPatient(currentInPatientList[i]);
+         databaseIn.updateRoom(currentInPatientList[i]);
+      }
+
+      //insert all out-patients from patient array
+      for (int i = 0; i < outPatientList.length; i++) {
+         databaseIn.insertOutPatient(outPatientList[i]);
+      }
+      //insert all diagnosis from diagnosis array
+      for (int i = 0; i < diagList.length; i++) {
+         databaseIn.insertDiag(diagList[i]);
+      }
+      System.out.println("Person text file inserted into database.");
+   }
+
+   public void treatmentDatabaseOperations(DatabaseSQL databaseIn) {
+      databaseIn.dropTreatment();
+      databaseIn.createTreatmentTable();
+      databaseIn.createAllTreatment();
+
+      for (int i = 0; i < allTreatmentList.length; i++) {
+         databaseIn.insertAllTreatment(allTreatmentList[i]);
+      }
+
+      //insert all treatments from treatment array
+      for (int i = 0; i < treatmentList.length; i++) {
+         databaseIn.insertTreatment(treatmentList[i]);
+      }
+      System.out.println("Treatment text file inserted into database.");
+
    }
    
    public void addEmployee(Employee employeeIn) {

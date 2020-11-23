@@ -24,7 +24,6 @@ public class DatabaseSQL {
       } catch (SQLException e) {
          System.out.println(e.getMessage());
       }
-
    }
 
    //Connects to database
