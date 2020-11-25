@@ -7,10 +7,18 @@ import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.DatabaseMetaData;
 
+/**
+ * Creates the database
+ * Connects to the database
+ * Creates tables
+ * Updates tables
+ * Inserts into tables
+ */
 public class DatabaseSQL {
-
-   //Create a new database if the file does not exist
-   public void createNewDatabase(String fileName) {
+   /**
+    * Creates a database if a database name database.sl3 does not exist
+    */
+   public void createNewDatabase() {
       String url = "jdbc:sqlite:/Users/alexandrekhien/Google Drive/0 - Computer Science"
               + "/Auburn/CPSC5133 Database 2/Hospital Project/Database/database.sl3";
 
@@ -26,7 +34,10 @@ public class DatabaseSQL {
       }
    }
 
-   //Connects to database
+   /**
+    * Connects to a given database
+    * @return a connection
+    */
    public Connection connect() {
         // SQLite connection string
       String url = "jdbc:sqlite:/Users/alexandrekhien/Google Drive/0 - Computer Science"
@@ -42,7 +53,6 @@ public class DatabaseSQL {
       } catch (SQLException e) {
          System.out.println(e.getMessage());
       }
-        
       return conn;
    }
    

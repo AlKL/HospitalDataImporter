@@ -191,7 +191,7 @@ public class DataImporter {
    }
 
    public void connectToDatabase(DatabaseSQL databaseIn) {
-      databaseIn.createNewDatabase("database.sl3");
+      databaseIn.createNewDatabase();
       databaseIn.connect();
    }
 

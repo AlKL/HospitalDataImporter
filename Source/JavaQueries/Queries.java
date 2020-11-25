@@ -7,8 +7,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 
+/**
+ * Executable list of SQL queries
+ */
 public class Queries {
-    //Constructor to connect to database
+    /**
+     * Connects to a given database
+     * @return a connection
+     */
     public Connection connect() {
         // SQLite connection string
         String url = "jdbc:sqlite:/Users/alexandrekhien/Google Drive/0 - Computer Science"
@@ -28,7 +34,9 @@ public class Queries {
         return conn;
     }
 
-    //1.1 - Room Utilization
+    /**
+     * 1.1 Room Utilization
+     */
     public void roomUtilization() {
         String sql = "SELECT roomNumber, firstName, lastName, admissionDate"
             + " FROM currentInPatient;";
@@ -50,7 +58,9 @@ public class Queries {
         }
     }
 
-    //1.2 - List the rooms that are currently unoccupied
+    /**
+     * 1.2 List the rooms that are currently unoccupied
+     */
     public void roomOccupation() {
         String sql = "SELECT roomNumber " +
                 " FROM Rooms " +
@@ -70,7 +80,9 @@ public class Queries {
         }
     }
 
-    //1.3 List all rooms, rooms occupied, by whom and admission dates for those occupied
+    /**
+     * 1.3 List all rooms, rooms occupied, by whom and admission rates for those rooms occupied
+     */
     public void allRoomsOccupation() {
         String sql = "SELECT Rooms.roomNumber, currentInPatient.firstName, currentInPatient.lastName, "
                 + "currentInPatient.admissionDate "
@@ -95,7 +107,9 @@ public class Queries {
         }
     }
 
-    //2.1 List all patients in the database with all personal information
+    /**
+     * 2.1 List all patients in the database with all personal information
+     */
     public void allPatients() {
         String sql = "SELECT * "
                 + " FROM Patient;";
@@ -116,7 +130,9 @@ public class Queries {
         }
     }
 
-    //2.2 List all currently admitted inpatients at the hospital
+    /**
+     * 2.2 List all currently admitted inPatients at the hospital
+     */
     public void allCurrentPatients() {
         String sql = "SELECT patientID, firstName, lastName "
                 + " FROM currentInPatient;";
@@ -136,7 +152,11 @@ public class Queries {
         }
     }
 
-    //2.3 List patients discharged within a given range
+    /**
+     * 2.3 List patients discharged within a given date range
+     * @param startDateIn beginning date
+     * @param endDateIn end date
+     */
     public void patientsWithinDischargeRange(String startDateIn, String endDateIn) {
 
         String sql = "SELECT patientID, firstName, lastName "
@@ -159,7 +179,11 @@ public class Queries {
         }
     }
 
-    //2.4 List patients admitted within a given date range
+    /**
+     * 2.4 List patients admitted within a given date range
+     * @param startDateIn beginning date
+     * @param endDateIn end date
+     */
     public void patientsWithinAdmitRange(String startDateIn, String endDateIn) {
         String sql = "SELECT patientID, firstName, lastName "
                 + " FROM InPatient "
@@ -181,7 +205,10 @@ public class Queries {
         }
     }
 
-    //2.5 For a given patient, list all admissions to the hospital with the diagnosis
+    /**
+     * 2.5 For a given patient, list all admissions to the hospital with the diagnosis
+     * @param patientLastNameIn patient last name
+     */
     public void givenPatient(String patientLastNameIn) {
         String sql = "SELECT firstName, lastName, admissionDate, iniDiagnosis "
                 + " FROM inPatient "
@@ -203,7 +230,10 @@ public class Queries {
         }
     }
 
-    //2.6 For a given patient, list all treatments and treatment dates
+    /**
+     * 2.6 For a given patient, list all treatments and treatment dates
+     * @param patientLastNameIn patient last name
+     */
     public void givenPatientTreatment(String patientLastNameIn) {
         String sql = "SELECT ptLastName, treatment, treatmentDate "
                 + " FROM Treatment "
@@ -224,7 +254,9 @@ public class Queries {
         }
     }
 
-    //2.7 List patients who were admitted to the hospital 30 days within their last discharge date
+    /**
+     * 2.7 List patients who were admitted to the hospital 30 days within their last discharge date
+     */
     public void dischargeWithinThirty() {
         String sql = "SELECT patientID, firstName, currentInPatient.lastName, primaryDoctorLastName "
                 + " FROM currentInPatient "
@@ -251,8 +283,10 @@ public class Queries {
         }
     }
 
-    //2.8 For all patients ever admitted, list total admissions, avg duration of each admission
-    //longest span between, shortest span between, and average span between admissions
+    /**
+     * 2.8 For all patients ever admitted, list total admissions, avg duration of each admission
+     * longest span between, shortest span between, and average span between admissions
+     */
     public void patientHistory() {
         String sql = "SELECT a.lastName, Total, Average, Maximum, Minimum, BetweenAVG "
                 + " FROM (SELECT x.lastName, Total, Average "
@@ -295,7 +329,9 @@ public class Queries {
         }
     }
 
-    //3.1 List the diagnosis' given to admitted patients
+    /**
+     * 3.1 List the diagnosis' given to admitted patients
+     */
     public void inPatientDiagnosis () {
         String sql = "SELECT diagnosisID, diagnosisName, COUNT(diagnosis.diagnosisName) AS counter "
                 + " FROM currentInPatient "
@@ -319,7 +355,9 @@ public class Queries {
         }
     }
 
-    //3.2 List the diagnosis' given to all patients ever to visit the hospital
+    /**
+     * 3.2 List the diagnosis' given to all patients ever to visit the hospital
+     */
     public void allPatientDiagnosis () {
         String sql = "SELECT diagnosisID, diagnosisName, COUNT(diagnosis.diagnosisName) AS counter "
                 + " FROM inPatient "
@@ -343,7 +381,9 @@ public class Queries {
         }
     }
 
-    //3.3 List treatments performed at the hospital
+    /**
+     * 3.3 List treatments performed at the hospital
+     */
     public void listTreatments () {
         String sql = "SELECT treatmentID, treatment, COUNT(treatmentID) AS counter "
                 + " FROM treatment "
@@ -365,7 +405,9 @@ public class Queries {
         }
     }
 
-    //3.4 List treatments performed on admitted patients
+    /**
+     * 3.4 List treatments performed on admitted patients
+     */
     public void listAdmittedTreatments () {
         String sql = "SELECT treatmentID, treatment, COUNT(treatmentID) AS counter "
                 + " FROM treatment "
@@ -388,7 +430,9 @@ public class Queries {
         }
     }
 
-    //3.5 List the top 5 administered medications
+    /**
+     * 3.5 List the top 5 administered medications
+     */
     public void topMedications () {
         String sql = "SELECT treatment, COUNT(treatment) AS counter "
                 + " FROM treatment "
@@ -410,7 +454,9 @@ public class Queries {
         }
     }
 
-    //3.6 List most common procedures and operating doctors
+    /**
+     * 3.6 List most common procedures and operating doctors
+     */
     public void topProcedure() {
         String sql = "SELECT treatment, docLastName "
                 + " FROM Treatment "
@@ -436,7 +482,9 @@ public class Queries {
         }
     }
 
-    //3.7 List most recent procedure at the hospital
+    /**
+     * 3.7 List most recent procedure at the hospital
+     */
     public void mostRecentProcedure() {
         String sql = "SELECT treatment, docLastName "
                 + " FROM Treatment "
@@ -461,7 +509,9 @@ public class Queries {
         }
     }
 
-    //3.8 List the top 5 most frequent patients and their diagnosis'
+    /**
+     * 3.8 List the top 5 most frequent patients and their diagnosis'
+     */
     public void topFiveDiagnosis() {
         String sql = "SELECT iniDiagnosis, inPatient.firstName "
                 + " FROM inPatient "
@@ -486,7 +536,9 @@ public class Queries {
         }
     }
 
-    //4.1 List all employees
+    /**
+     * 4.1 List all employees
+     */
     public void listEmployees() {
         String sql = "SELECT firstName, lastName, jobCategory "
                 + " FROM Employee "
@@ -507,7 +559,9 @@ public class Queries {
         }
     }
 
-    //4.2 List primary doctors with high admission rates (over 4 in past year)
+    /**
+     * 4.2 List primary doctors with high admission rates (over 4 in past year)
+     */
     public void listFrequentDoctors() {
         String sql = "SELECT primaryDoctorLastName, COUNT(primaryDoctorLastName) AS counter"
                 + " FROM (SELECT primaryDoctorLastName, admissionDate "
@@ -530,7 +584,10 @@ public class Queries {
         }
     }
 
-    //4.3 For a given doctor, list all associated diagnosis'
+    /**
+     * 4.3 For a given doctor, list all associated diagnosis'
+     * @param doctorNameIn doctor's name
+     */
     public void listDoctorDiagnosis(String doctorNameIn) {
         String sql = "SELECT iniDiagnosis, COUNT(iniDiagnosis) as counter "
                 + " FROM(SELECT iniDiagnosis "
@@ -557,7 +614,10 @@ public class Queries {
         }
     }
 
-    //4.4 For a given doctor, list all treatments that they ordered
+    /**
+     * 4.4 For a given doctor, list all treatments that they ordered
+     * @param doctorNameIn doctor's name
+     */
     public void listDoctorTreatment(String doctorNameIn) {
         String sql = "SELECT treatment, COUNT(treatment) as counter "
                 + " FROM Treatment "
@@ -579,7 +639,9 @@ public class Queries {
         }
     }
 
-    //4.5 List doctors who have been involved in the treatment of every admitted patient
+    /**
+     * 4.5 List doctors who have been involved in the treatment of every admitted patient
+     */
     public void listDoctorsAllInPatient() {
         String sql = "SELECT DISTINCT Treatment.docLastName "
                 + " FROM Treatment "
