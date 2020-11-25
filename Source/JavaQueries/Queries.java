@@ -35,11 +35,12 @@ public class Queries {
     }
 
     /**
-     * 1.1 Room Utilization
+     * 1.1 Room Utilization.
      */
     public void roomUtilization() {
         String sql = "SELECT roomNumber, firstName, lastName, admissionDate"
             + " FROM currentInPatient;";
+        System.out.println("Room Utilization");
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -52,7 +53,6 @@ public class Queries {
                         + rs.getString("lastName") + "\t"
                         + rs.getString("admissionDate"));
             }
-
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -65,6 +65,7 @@ public class Queries {
         String sql = "SELECT roomNumber " +
                 " FROM Rooms " +
                 " WHERE roomOcc = 0;";
+        System.out.println("List the rooms that are currently unoccupied");
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -89,6 +90,7 @@ public class Queries {
                 + "FROM Rooms "
                 + "LEFT JOIN currentInPatient "
                 + "ON Rooms.roomNumber = currentInPatient.roomNumber;";
+        System.out.println("List all rooms, occupied, by whom and admission rates for those rooms occupied");
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -113,6 +115,7 @@ public class Queries {
     public void allPatients() {
         String sql = "SELECT * "
                 + " FROM Patient;";
+        System.out.println("List all patients in the database with all personal information");
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -136,6 +139,7 @@ public class Queries {
     public void allCurrentPatients() {
         String sql = "SELECT patientID, firstName, lastName "
                 + " FROM currentInPatient;";
+        System.out.println("List all currently admitted patients at the hospital");
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -158,11 +162,11 @@ public class Queries {
      * @param endDateIn end date
      */
     public void patientsWithinDischargeRange(String startDateIn, String endDateIn) {
-
         String sql = "SELECT patientID, firstName, lastName "
                 + " FROM InPatient "
                 + " WHERE dischargeDate "
                 + " BETWEEN '" + startDateIn + "' AND '" + endDateIn + "';";
+        System.out.println("List all patients discharged within a given date range");
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -180,7 +184,7 @@ public class Queries {
     }
 
     /**
-     * 2.4 List patients admitted within a given date range
+     * 2.4 List all patients admitted within a given date range
      * @param startDateIn beginning date
      * @param endDateIn end date
      */
@@ -189,6 +193,7 @@ public class Queries {
                 + " FROM InPatient "
                 + " WHERE admissionDate "
                 + " BETWEEN '" + startDateIn + "' AND '" + endDateIn + "';";
+        System.out.println("List all patients admitted within a given date range");
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -213,6 +218,7 @@ public class Queries {
         String sql = "SELECT firstName, lastName, admissionDate, iniDiagnosis "
                 + " FROM inPatient "
                 + " WHERE lastName = '" + patientLastNameIn + "';";
+        System.out.println("For a given patient, list all admissions to the hospital with the diagnosis");
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -238,6 +244,7 @@ public class Queries {
         String sql = "SELECT ptLastName, treatment, treatmentDate "
                 + " FROM Treatment "
                 + " WHERE ptLastName = '" + patientLastNameIn + "';";
+        System.out.println("For a given patient, list all treatments and treatment dates");
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -266,6 +273,7 @@ public class Queries {
                 + " GROUP BY lastName) AS MXDIS "
                 + " ON currentInPatient.lastName = MXDIS.lastName "
                 + " WHERE (admissionDate) < DATE(MXDIS.dischargeDate,'+30 day')";
+        System.out.println("List patients who were admitted within 30 days of their last discharge");
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -310,6 +318,8 @@ public class Queries {
                 + " GROUP BY lastName "
                 + " ORDER BY lastName DESC) AS b "
                 + " ON a.lastName = b.lastName;";
+        System.out.println("For all patients ever admitted, list total admissions, average duration "
+            + "of each admission, longest span between, and average span between admissions");
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -339,6 +349,7 @@ public class Queries {
                 + " ON currentInPatient.iniDiagnosis = Diagnosis.diagnosisName"
                 + " GROUP BY diagnosisName "
                 + " ORDER BY COUNT(diagnosisName) DESC;";
+        System.out.println("List the diagnosis' given to admitted patients");
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -365,6 +376,7 @@ public class Queries {
                 + " ON inPatient.iniDiagnosis = Diagnosis.diagnosisName"
                 + " GROUP BY diagnosisName "
                 + " ORDER BY COUNT(diagnosisName) DESC;";
+        System.out.println("List the diagnosis' given to all patients ever to visit the hospital");
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -389,6 +401,7 @@ public class Queries {
                 + " FROM treatment "
                 + " GROUP BY treatmentID "
                 + " ORDER BY COUNT(treatmentID) DESC;";
+        System.out.println("List treatments performed at the hospital");
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -414,6 +427,7 @@ public class Queries {
                 + " JOIN currentInPatient "
                 + " ON Treatment.ptLastName = currentInPatient.lastName"
                 + " GROUP BY treatmentID;";
+        System.out.println("List treatments performed on admitted patients");
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -439,6 +453,7 @@ public class Queries {
                 + " WHERE treatmentType = 'M' "
                 + " GROUP BY treatment "
                 + " LIMIT 5;";
+        System.out.println("List the top 5 administered medications");
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -467,6 +482,7 @@ public class Queries {
                 + " ORDER BY COUNT(treatment) DESC "
                 + " LIMIT 1) "
                 + " GROUP BY docLastName;";
+        System.out.println("List most common procedures and operating doctors");
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -494,6 +510,7 @@ public class Queries {
                 + " FROM Treatment "
                 + " WHERE treatmentType = 'P')) "
                 + " AND treatmentType = 'P';";
+        System.out.println("List most recent procedure at the hospital");
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -521,6 +538,7 @@ public class Queries {
                 + " ORDER BY COUNT(firstName) DESC "
                 + " LIMIT 5) AS TOP "
                 + " ON inpatient.firstName = TOP.firstName;";
+        System.out.println("List the top 5 most frequent patients and their diagnosis'");
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -543,6 +561,7 @@ public class Queries {
         String sql = "SELECT firstName, lastName, jobCategory "
                 + " FROM Employee "
                 + " ORDER BY firstName, lastName ASC;";
+        System.out.println("List all employees");
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -569,6 +588,7 @@ public class Queries {
                 + " WHERE admissionDate BETWEEN (SELECT date('now','-1 years')) AND (SELECT date('now'))) "
                 + " GROUP by primaryDoctorLastName"
                 + " HAVING COUNT(primaryDoctorLastName) > 3;";
+        System.out.println("List primary doctors with high admission rates (over 4 in the past year)");
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -599,6 +619,7 @@ public class Queries {
                 + " WHERE primaryDoctorLastName = 'Lowry') "
                 + " GROUP BY iniDiagnosis "
                 + " ORDER BY COUNT(iniDiagnosis) DESC;";
+        System.out.println("For a given doctor, list all associated diagnosis'");
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -624,6 +645,7 @@ public class Queries {
                 + " WHERE docLastName = '" + doctorNameIn + "' "
                 + " GROUP BY treatment "
                 + " ORDER BY COUNT(treatment) DESC;";
+        System.out.println("For a given doctor, list all treatments that they ordered");
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -647,6 +669,7 @@ public class Queries {
                 + " FROM Treatment "
                 + " JOIN currentInPatient "
                 + " ON Treatment.docLastName = currentInPatient.primaryDoctorLastName;";
+        System.out.println("List doctors who have been involved in the treatment of every admitted patient ");
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();

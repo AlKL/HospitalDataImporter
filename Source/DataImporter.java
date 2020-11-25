@@ -228,7 +228,7 @@ public class DataImporter {
       for (int i = 0; i < outPatientList.length; i++) {
          databaseIn.insertOutPatient(outPatientList[i]);
       }
-      System.out.println("Person text file inserted into database.");
+      System.out.println("Person text file inserted into database.\n");
    }
 
    public void treatmentDatabaseOperations(DatabaseSQL databaseIn) {

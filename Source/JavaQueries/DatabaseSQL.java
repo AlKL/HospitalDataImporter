@@ -25,8 +25,7 @@ public class DatabaseSQL {
       try (Connection conn = DriverManager.getConnection(url)) {
          if (conn != null) {
             DatabaseMetaData meta = conn.getMetaData();
-            System.out.println("The driver name is " + meta.getDriverName());
-            System.out.println("A new database has been created.");
+            System.out.println("A new database has been created labelled 'database.sl3'.");
          }
 
       } catch (SQLException e) {
@@ -104,8 +103,7 @@ public class DatabaseSQL {
                 + "  treatmentType VARCHAR(1), \n"
                 + "  treatment VARCHAR(50), \n"
                 + "  treatmentDate TEXT, \n"
-                + "  FOREIGN KEY (docLastName) REFERENCES Doctor (lastName), \n"
-                + "  FOREIGN KEY (ptLastName) REFERENCES Patient (lastName) "
+                + "  FOREIGN KEY (docLastName) REFERENCES Doctor (lastName) \n"
                 + ");";
 
       try (Connection conn = this.connect()) {
