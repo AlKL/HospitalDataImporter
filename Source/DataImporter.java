@@ -93,6 +93,13 @@ public class DataImporter {
                      String dischargeDate = wordScan.next().trim();
                      Patient p;
 
+                     //Add diagnosis - this can be optimized
+                     boolean checkDiag = diagMap.containsKey(iniDiagnosis);
+                     if (!checkDiag) {
+                        Diagnosis d = new Diagnosis(iniDiagnosis, addDiagToMap(iniDiagnosis));
+                        addDiag(d);
+                     }
+
                      //Check if the patient is already in the system and assign/get patientID
                      boolean check = ptMap.containsKey(lastName);
 
@@ -123,13 +130,6 @@ public class DataImporter {
                         addOutPatient(p);
                      }
                      inPatientNo++;
-
-                     //Add diagnosis - this can be optimized
-                     boolean checkDiag = diagMap.containsKey(iniDiagnosis);
-                     if (!checkDiag) {
-                        Diagnosis d = new Diagnosis(iniDiagnosis, addDiagToMap(iniDiagnosis));
-                        addDiag(d);
-                     }
                      continue;
 
                   case 'D': 
@@ -199,6 +199,11 @@ public class DataImporter {
       databaseIn.dropAllTables();
       databaseIn.createAllTables();
 
+      for (int i = 0; i < diagList.length; i++) {
+         databaseIn.insertDiag(diagList[i]);
+      }
+
+      //insert all diagnosis from diagnosis array
       for (int i = 0; i < employeeList.length; i++) {
          databaseIn.insertEmployee(employeeList[i]);
       }
@@ -223,10 +228,6 @@ public class DataImporter {
       for (int i = 0; i < outPatientList.length; i++) {
          databaseIn.insertOutPatient(outPatientList[i]);
       }
-      //insert all diagnosis from diagnosis array
-      for (int i = 0; i < diagList.length; i++) {
-         databaseIn.insertDiag(diagList[i]);
-      }
       System.out.println("Person text file inserted into database.");
    }
 
@@ -239,7 +240,6 @@ public class DataImporter {
          databaseIn.insertTreatment(treatmentList[i]);
       }
       System.out.println("Treatment text file inserted into database.");
-
    }
    
    public void addEmployee(Employee employeeIn) {

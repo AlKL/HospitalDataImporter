@@ -57,16 +57,16 @@ public class DatabaseSQL {
       String technician = Tables.employeeTable("Technician");
       String volunteer = Tables.employeeTable("Volunteer");
       String room = Tables.room();
+      String diagnosis = Tables.diagnosis();
       String patient = Tables.patient(); 
       String inPatient = Tables.inPatient();
       String outPatient = Tables.outPatient();
       String currentInPatient = Tables.currentInPatient();
       createTreatmentTable();
-      String diagnosis = Tables.diagnosis();
-       
+
       try (Connection conn = this.connect()) {
          Statement stmt  = conn.createStatement();
-         stmt.execute(employee); 
+         stmt.execute(employee);
          stmt.execute(doctor); 
          stmt.execute(nurse); 
          stmt.execute(administrator); 
@@ -74,18 +74,18 @@ public class DatabaseSQL {
          stmt.execute(volunteer); 
          stmt.execute(room);     
          this.createRooms();
-         stmt.execute(patient); 
-         stmt.execute(inPatient);
-         stmt.execute(outPatient);
-         stmt.execute(currentInPatient);
          stmt.execute(diagnosis);
-         stmt.close();         
+         stmt.execute(patient);
+         stmt.execute(inPatient);
+         stmt.execute(currentInPatient);
+         stmt.execute(outPatient);
+         stmt.close();
       } catch (SQLException e) {
          System.out.println(e.getMessage());
          e.printStackTrace();
       }
    }
-   
+
    public void createTreatmentTable() {
       String sql = "CREATE TABLE IF NOT EXISTS Treatment (\n"
                 + "  treatmentID integer, \n"
@@ -93,17 +93,19 @@ public class DatabaseSQL {
                 + "  docLastName VARCHAR(50), \n"
                 + "  treatmentType VARCHAR(1), \n"
                 + "  treatment VARCHAR(50), \n"
-                + "  treatmentDate TEXT \n"
-                + ");"; 
-                     
+                + "  treatmentDate TEXT, \n"
+                + "  FOREIGN KEY (docLastName) REFERENCES Doctor (lastName), \n"
+                + "  FOREIGN KEY (ptLastName) REFERENCES Patient (lastName) "
+                + ");";
+
       try (Connection conn = this.connect()) {
          Statement stmt  = conn.createStatement();
-         stmt.execute(sql);         
-         stmt.close();         
+         stmt.execute(sql);
+         stmt.close();
       } catch (SQLException e) {
          System.out.println(e.getMessage());
          e.printStackTrace();
-      }      
+      }
    }
    
    /**
@@ -129,7 +131,6 @@ public class DatabaseSQL {
       this.dropTable("currentInPatient");
       this.dropTable("InPatient");
       this.dropTable("OutPatient");
-      this.dropTable("Diagnosis");
       this.dropTable("Patient");
       this.dropTable("Nurse");
       this.dropTable("Administrator");
@@ -139,6 +140,7 @@ public class DatabaseSQL {
       this.dropTable("Doctor");
       this.dropTable("Employee");
       this.dropTable("Rooms");
+      this.dropTable("Diagnosis");
    }
    
    public void dropTable(String tableIn) {

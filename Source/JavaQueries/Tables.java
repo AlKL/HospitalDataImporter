@@ -1,7 +1,6 @@
 package JavaQueries;
 
 public class Tables {
-
    public static String employeeTable(String employeeIn) {
       return "CREATE TABLE IF NOT EXISTS " + employeeIn + "(\n"
                 + "  firstName VARCHAR(50) NOT NULL, \n"
@@ -31,16 +30,9 @@ public class Tables {
                 + "  patientID integer PRIMARY KEY NOT NULL, \n"
                 + "  firstName VARCHAR(50) NOT NULL, \n"
                 + "  lastName VARCHAR(50) NOT NULL, \n"
-                + "  primaryDoctorLastName VARCHAR(50) NOT NULL \n"
+                + "  primaryDoctorLastName VARCHAR(50) NOT NULL, \n"
+                + "  FOREIGN KEY (primaryDoctorLastName) REFERENCES Doctor (lastName)"
                 + ");";
-   }
-
-   public static String outPatient() {
-      return "CREATE TABLE IF NOT EXISTS OutPatient(\n"
-              + "  patientID integer PRIMARY KEY NOT NULL, \n"
-              + "  primaryDoctorLastName VARCHAR(50) NOT NULL, "
-              + "  iniDiagnosis VARCHAR(50) NOT NULL"
-              + ");";
    }
    
    public static String inPatient() {
@@ -57,10 +49,10 @@ public class Tables {
                 + "  primaryDoctorLastName VARCHAR(50) NOT NULL, \n"
                 + "  iniDiagnosis VARCHAR(100) NOT NULL, \n"
                 + "  admissionDate TEXT, \n"
-                + "  dischargeDate TEXT \n"
-                //+ "  FOREIGN KEY (patientID) REFERENCES Patient (patientID), \n"
-                //+ "  FOREIGN KEY (primaryDoctorLastName) REFERENCES Doctor (lastName) \n"
-                //+ "  FOREIGN KEY (roomNumber) REFERENCES Rooms (roomNumber) \n"
+                + "  dischargeDate TEXT, \n"
+                + "  FOREIGN KEY (patientID) REFERENCES Patient (patientID), \n"
+                + "  FOREIGN KEY (primaryDoctorLastName) REFERENCES Doctor (lastName) \n"
+                + "  FOREIGN KEY (roomNumber) REFERENCES Rooms (roomNumber) \n"
                 + ");";
    }
 
@@ -77,34 +69,28 @@ public class Tables {
               + "  insPolicyNo VARCHAR(100), \n"
               + "  primaryDoctorLastName VARCHAR(50) NOT NULL, \n"
               + "  iniDiagnosis VARCHAR(100) NOT NULL, \n"
-              + "  admissionDate TEXT NOT NULL \n"
-              //+ "  FOREIGN KEY (patientID) REFERENCES Patient (patientID), \n"
-              //+ "  FOREIGN KEY (primaryDoctorLastName) REFERENCES Doctor (lastName), \n"
-              //+ "  FOREIGN KEY (roomNumber) REFERENCES Rooms (roomNumber) \n"
+              + "  admissionDate TEXT NOT NULL, \n"
+              + "  FOREIGN KEY (inPtNo) REFERENCES InPatient (inPtNo), \n"
+              + "  FOREIGN KEY (patientID) REFERENCES Patient (patientID), \n"
+              + "  FOREIGN KEY (primaryDoctorLastName) REFERENCES Doctor (lastName), \n"
+              + "  FOREIGN KEY (roomNumber) REFERENCES Rooms (roomNumber) \n"
               + ");";
    }
-   
-   public static String treatment() {
-      return "CREATE TABLE IF NOT EXISTS Treatment (\n"
-                + "  treatmentID integer, \n"
-                + "  ptLastName VARCHAR(50), \n"
-                + "  docLastName VARCHAR(50), \n"
-                + "  treatmentType VARCHAR(1), \n"
-                + "  treatment VARCHAR(50), \n"
-                + "  treatmentDate TEXT \n"
-                + ");"; 
+
+   public static String diagnosis() {
+      return "CREATE TABLE IF NOT EXISTS Diagnosis(\n"
+                + "  diagnosisID integer PRIMARY KEY, \n"
+                + "  diagnosisName VARCHAR(100) NOT NULL \n"
+                + ");";
    }
 
-         
-   //////////////////////////////////////////////////////////////
-   //Create diagnosis array//////////////////////////////////////
-   //diagnosis' are created with inpatient creation
-   public static String diagnosis() {
-      return "CREATE TABLE IF NOT EXISTS Diagnosis (\n"
-                + "  diagnosisID integer, \n"
-                + "  diagnosisName VARCHAR(100) \n"
-                //+ "  patientID integer \n"
-                //+ "  FOREIGN KEY (patientID) REFERENCES Patient (patientID) \n"
-                + ");"; 
+   public static String outPatient() {
+      return "CREATE TABLE IF NOT EXISTS OutPatient(\n"
+              + "  patientID integer PRIMARY KEY NOT NULL, \n"
+              + "  primaryDoctorLastName VARCHAR(50) NOT NULL, \n"
+              + "  iniDiagnosis VARCHAR(100) NOT NULL, \n"
+              + "  FOREIGN KEY (patientID) REFERENCES Patient (patientID), \n"
+              + "  FOREIGN KEY (primaryDoctorLastName) REFERENCES Doctor (lastName) \n"
+              + ");";
    }
 }
