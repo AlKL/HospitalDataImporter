@@ -1,5 +1,5 @@
 import java.io.FileNotFoundException;
-import JavaQueries.Queries;
+import JavaQueries.*;
 import java.util.Scanner;
 
 public class Menu {
