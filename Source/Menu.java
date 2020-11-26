@@ -113,10 +113,12 @@ public class Menu {
                System.out.print("Enter doctor last name: ");
                String doctorName = userInput.nextLine();
                query.listDoctorDiagnosis(doctorName);
+               break;
             case "4.4":
                System.out.print("Enter doctor last name: ");
                String doctorName2 = userInput.nextLine();
                query.listDoctorTreatment(doctorName2);
+               break;
             case "4.5":
                query.listDoctorsAllInPatient();
                break;

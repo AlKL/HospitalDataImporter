@@ -166,7 +166,8 @@ public class Queries {
                 + " FROM InPatient "
                 + " WHERE dischargeDate "
                 + " BETWEEN '" + startDateIn + "' AND '" + endDateIn + "';";
-        System.out.println("List all patients discharged within a given date range");
+        System.out.println("List all patients discharged between " + startDateIn + " and "
+                + endDateIn);
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -193,7 +194,8 @@ public class Queries {
                 + " FROM InPatient "
                 + " WHERE admissionDate "
                 + " BETWEEN '" + startDateIn + "' AND '" + endDateIn + "';";
-        System.out.println("List all patients admitted within a given date range");
+        System.out.println("List all patients admitted between " + startDateIn + " and "
+                + endDateIn);
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -218,7 +220,7 @@ public class Queries {
         String sql = "SELECT firstName, lastName, admissionDate, iniDiagnosis "
                 + " FROM inPatient "
                 + " WHERE lastName = '" + patientLastNameIn + "';";
-        System.out.println("For a given patient, list all admissions to the hospital with the diagnosis");
+        System.out.println("For patient " + patientLastNameIn + ", list all admissions to the hospital with the diagnosis");
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -244,7 +246,7 @@ public class Queries {
         String sql = "SELECT ptLastName, treatment, treatmentDate "
                 + " FROM Treatment "
                 + " WHERE ptLastName = '" + patientLastNameIn + "';";
-        System.out.println("For a given patient, list all treatments and treatment dates");
+        System.out.println("For patient " + patientLastNameIn + ", list all treatments and treatment dates");
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -619,7 +621,7 @@ public class Queries {
                 + " WHERE primaryDoctorLastName = 'Lowry') "
                 + " GROUP BY iniDiagnosis "
                 + " ORDER BY COUNT(iniDiagnosis) DESC;";
-        System.out.println("For a given doctor, list all associated diagnosis'");
+        System.out.println("For doctor " + doctorNameIn + ", list all associated diagnosis'");
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -645,7 +647,7 @@ public class Queries {
                 + " WHERE docLastName = '" + doctorNameIn + "' "
                 + " GROUP BY treatment "
                 + " ORDER BY COUNT(treatment) DESC;";
-        System.out.println("For a given doctor, list all treatments that they ordered");
+        System.out.println("For doctor " + doctorNameIn + ", list all treatments that they ordered");
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();

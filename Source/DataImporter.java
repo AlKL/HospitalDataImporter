@@ -239,7 +239,7 @@ public class DataImporter {
       for (int i = 0; i < treatmentList.length; i++) {
          databaseIn.insertTreatment(treatmentList[i]);
       }
-      System.out.println("Treatment text file inserted into database.");
+      System.out.println("Treatment text file inserted into database.\n");
    }
    
    public void addEmployee(Employee employeeIn) {
