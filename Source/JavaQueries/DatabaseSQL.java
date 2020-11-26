@@ -347,7 +347,6 @@ public class DatabaseSQL {
 
       try (Connection conn = this.connect()) {
          PreparedStatement ps = conn.prepareStatement(sql);
-         Statement stmt  = conn.createStatement();
 
          ps.setInt(1, patientIn.getInPatientNo());
          ps.setInt(2, patientIn.getPatientID());

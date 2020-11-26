@@ -1,5 +1,4 @@
 import java.io.FileNotFoundException;
-import JavaQueries.DatabaseSQL;
 import JavaQueries.Queries;
 import java.util.Scanner;
 
@@ -33,97 +32,60 @@ public class Menu {
       System.out.print("Which query would you like to execute? ");
       do {
          choice = userInput.nextLine();
-         switch(choice) {
-            case "1.1":
-               query.roomUtilization();
-               break;
-            case "1.2":
-               query.roomOccupation();
-               break;
-            case "1.3":
-               query.allRoomsOccupation();
-               break;
-            case "2.1":
-               query.allPatients();
-               break;
-            case "2.2":
-               query.allCurrentPatients();
-               break;
-            case "2.3":
+         switch (choice) {
+            case "1.1" -> query.roomUtilization();
+            case "1.2" -> query.roomOccupation();
+            case "1.3" -> query.allRoomsOccupation();
+            case "2.1" -> query.allPatients();
+            case "2.2" -> query.allCurrentPatients();
+            case "2.3" -> {
                System.out.print("Enter beginning date [yyyy-mm-dd]: ");
                String dischargeStartDate = userInput.nextLine();
                System.out.print("Enter end date [yyyy-mm-dd]: ");
                String dischargeEndDate = userInput.nextLine();
                query.patientsWithinDischargeRange(dischargeStartDate, dischargeEndDate);
-               break;
-            case "2.4":
+            }
+            case "2.4" -> {
                System.out.print("Enter beginning date [yyyy-mm-dd]: ");
                String admissionStartDate = userInput.nextLine();
                System.out.print("Enter end date [yyyy-mm-dd]: ");
                String admissionEndDate = userInput.nextLine();
                query.patientsWithinAdmitRange(admissionStartDate, admissionEndDate);
-               break;
-            case "2.5":
+            }
+            case "2.5" -> {
                System.out.print("Enter patient last name: ");
                String givenPatientLastName = userInput.nextLine();
                query.givenPatient(givenPatientLastName);
-               break;
-            case "2.6":
+            }
+            case "2.6" -> {
                System.out.print("Enter patient last name: ");
                String givenPatientLastName2 = userInput.nextLine();
                query.givenPatientTreatment(givenPatientLastName2);
-               break;
-            case "2.7":
-               query.dischargeWithinThirty();
-               break;
-            case "2.8":
-               query.patientHistory();
-               break;
-            case "3.1":
-               query.inPatientDiagnosis();
-               break;
-            case "3.2":
-               query.allPatientDiagnosis();
-               break;
-            case "3.3":
-               query.listTreatments();
-               break;
-            case "3.4":
-               query.listAdmittedTreatments();
-               break;
-            case "3.5":
-               query.topMedications();
-               break;
-            case "3.6":
-               query.topProcedure();
-               break;
-            case "3.7":
-               query.mostRecentProcedure();
-               break;
-            case "3.8":
-               query.topFiveDiagnosis();
-               break;
-            case "4.1":
-               query.listEmployees();
-               break;
-            case "4.2":
-               query.listFrequentDoctors();
-               break;
-            case "4.3":
+            }
+            case "2.7" -> query.dischargeWithinThirty();
+            case "2.8" -> query.patientHistory();
+            case "3.1" -> query.inPatientDiagnosis();
+            case "3.2" -> query.allPatientDiagnosis();
+            case "3.3" -> query.listTreatments();
+            case "3.4" -> query.listAdmittedTreatments();
+            case "3.5" -> query.topMedications();
+            case "3.6" -> query.topProcedure();
+            case "3.7" -> query.mostRecentProcedure();
+            case "3.8" -> query.topFiveDiagnosis();
+            case "4.1" -> query.listEmployees();
+            case "4.2" -> query.listFrequentDoctors();
+            case "4.3" -> {
                System.out.print("Enter doctor last name: ");
                String doctorName = userInput.nextLine();
                query.listDoctorDiagnosis(doctorName);
-               break;
-            case "4.4":
+            }
+            case "4.4" -> {
                System.out.print("Enter doctor last name: ");
                String doctorName2 = userInput.nextLine();
                query.listDoctorTreatment(doctorName2);
-               break;
-            case "4.5":
-               query.listDoctorsAllInPatient();
-               break;
-            default:
-               System.out.print("Invalid entry. ");
+            }
+            case "4.5" -> query.listDoctorsAllInPatient();
+            default -> System.out.print("Invalid entry. ");
          }
          do {
             System.out.print("Would you like to enter a new query? (Y/Q): ");

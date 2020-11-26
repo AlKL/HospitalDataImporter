@@ -1,11 +1,9 @@
 package JavaQueries;
-
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.PreparedStatement;
 
 /**
  * Executable list of SQL queries

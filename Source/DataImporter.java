@@ -5,7 +5,6 @@ import java.io.File;
 import java.util.HashMap;
 import Classes.*;
 import JavaQueries.DatabaseSQL;
-import java.util.NoSuchElementException;
 
 public class DataImporter {
    //Instance Variables
@@ -110,10 +109,10 @@ public class DataImporter {
                         addPatient(p);
                      }
                      //If the patient is already in the Patient table, add subsequent visits
+                     int getPtId = ptMap.get(lastName);
                      if (roomNo > 0) {
                         //Add to ALL inPatient list
                            //grab existing patient ID
-                        int getPtId = ptMap.get(lastName);
                         p = new Patient(inPatientNo, getPtId, firstName, lastName, roomNo, emergContact,
                                 emergNo, insPolicy, insPolicyNo, docLastName, iniDiagnosis, admissionDate,
                                 dischargeDate);
@@ -125,7 +124,6 @@ public class DataImporter {
                      }
                      //If not inPatient then add to OutPatient table
                      else {
-                        int getPtId = ptMap.get(lastName);
                         p = new Patient(getPtId, docLastName, iniDiagnosis);
                         addOutPatient(p);
                      }
@@ -199,34 +197,34 @@ public class DataImporter {
       databaseIn.dropAllTables();
       databaseIn.createAllTables();
 
-      for (int i = 0; i < diagList.length; i++) {
-         databaseIn.insertDiag(diagList[i]);
+      for (Diagnosis diagnosis : diagList) {
+         databaseIn.insertDiag(diagnosis);
       }
 
       //insert all diagnosis from diagnosis array
-      for (int i = 0; i < employeeList.length; i++) {
-         databaseIn.insertEmployee(employeeList[i]);
+      for (Employee employee : employeeList) {
+         databaseIn.insertEmployee(employee);
       }
 
       //insert all patients from patient array
-      for (int i = 0; i < patientList.length; i++) {
-         databaseIn.insertPatient(patientList[i]);
+      for (Patient element : patientList) {
+         databaseIn.insertPatient(element);
       }
 
       //insert all in-patients from patient array
-      for (int i = 0; i < inPatientList.length; i++) {
-         databaseIn.insertInPatient(inPatientList[i]);
+      for (Patient item : inPatientList) {
+         databaseIn.insertInPatient(item);
       }
 
       //insert all CURRENT in-patients from patient array
-      for (int i = 0; i < currentInPatientList.length; i++) {
-         databaseIn.insertCurrentInPatient(currentInPatientList[i]);
-         databaseIn.updateRoom(currentInPatientList[i]);
+      for (Patient value : currentInPatientList) {
+         databaseIn.insertCurrentInPatient(value);
+         databaseIn.updateRoom(value);
       }
 
       //insert all out-patients from patient array
-      for (int i = 0; i < outPatientList.length; i++) {
-         databaseIn.insertOutPatient(outPatientList[i]);
+      for (Patient patient : outPatientList) {
+         databaseIn.insertOutPatient(patient);
       }
       System.out.println("Person text file inserted into database.\n");
    }
@@ -236,8 +234,8 @@ public class DataImporter {
       databaseIn.createTreatmentTable();
 
       //insert all treatments from treatment array
-      for (int i = 0; i < treatmentList.length; i++) {
-         databaseIn.insertTreatment(treatmentList[i]);
+      for (Treatment treatment : treatmentList) {
+         databaseIn.insertTreatment(treatment);
       }
       System.out.println("Treatment text file inserted into database.\n");
    }
@@ -277,11 +275,9 @@ public class DataImporter {
       diagList[diagList.length - 1] = diagIn;
    }
 
-   public static int addTreatMap(String treatmentName) {
+   public static void addTreatMap(String treatmentName) {
       treatMap.put(treatmentName, treatmentID);
-      int temp = treatmentID;
       treatmentID++;
-      return temp;
    }
    
    public static int addDiagToMap(String iniDiagnosis) {
@@ -301,14 +297,4 @@ public class DataImporter {
       patientID++;
       return temp;
    }
-
-
-   public String toString() {
-      String stringResult = "";
-      for (Patient p : patientList) {
-         stringResult += "\n" + p + "\n";
-      }
-      return stringResult;
-   }
-   
 }
