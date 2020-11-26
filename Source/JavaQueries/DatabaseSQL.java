@@ -25,11 +25,11 @@ public class DatabaseSQL {
       try (Connection conn = DriverManager.getConnection(url)) {
          if (conn != null) {
             DatabaseMetaData meta = conn.getMetaData();
-            System.out.println("A new database has been created labelled 'database.sl3'.");
+            System.out.println("A new database has been created labelled 'database.sl3'.\n");
          }
 
       } catch (SQLException e) {
-         System.out.println(e.getMessage());
+         System.out.println("Unable to create database.");
       }
    }
 
@@ -50,7 +50,7 @@ public class DatabaseSQL {
          conn.createStatement().executeUpdate("PRAGMA foreign_keys = ON;");
             
       } catch (SQLException e) {
-         System.out.println(e.getMessage());
+         System.out.println("Database cannot connect - doesn't not exist.");
       }
       return conn;
    }
@@ -90,8 +90,7 @@ public class DatabaseSQL {
          stmt.execute(outPatient);
          stmt.close();
       } catch (SQLException e) {
-         System.out.println(e.getMessage());
-         e.printStackTrace();
+         System.out.println("All tables were not created.");
       }
    }
 
@@ -111,8 +110,7 @@ public class DatabaseSQL {
          stmt.execute(sql);
          stmt.close();
       } catch (SQLException e) {
-         System.out.println(e.getMessage());
-         e.printStackTrace();
+         System.out.println("Treatment table not created.");
       }
    }
    
@@ -129,9 +127,7 @@ public class DatabaseSQL {
          }
          stmt.close();         
       } catch (SQLException e) {
-         System.out.println(e.getMessage());
-         e.printStackTrace();
-      
+         System.out.println("Rooms table not created.");
       }   
    }
       
@@ -159,8 +155,7 @@ public class DatabaseSQL {
          stmt.execute(sql);       
          stmt.close();         
       } catch (SQLException e) {
-         System.out.println(e.getMessage());
-         e.printStackTrace();
+         System.out.println(tableIn + " table not dropped.");
       }      
    }
    
@@ -172,8 +167,7 @@ public class DatabaseSQL {
          stmt.execute(sql);
          stmt.close();
       } catch (SQLException e) {
-         System.out.println(e.getMessage());
-         e.printStackTrace();
+         System.out.println("Treatment table not dropped.");
       }   
    
    }
@@ -221,9 +215,7 @@ public class DatabaseSQL {
          ps.close();
          
       } catch (SQLException e) {
-         System.out.println("Insert Employee error: " + e.getMessage());
-         e.printStackTrace();
-      
+         System.out.println(employeeIn + " not inserted.");
       }   
    }
    
@@ -238,7 +230,7 @@ public class DatabaseSQL {
          ps.close();
          
       } catch (SQLException e) {
-         System.out.println(e.getMessage());
+         System.out.println("Employee category not inserted.");
       }
    }
 
@@ -252,8 +244,7 @@ public class DatabaseSQL {
          stmt.execute(update);
          stmt.close();
       } catch (SQLException e) {
-         System.out.println(e.getMessage());
-         e.printStackTrace();
+         System.out.println("Rooms not updated.");
       }
    }
 
@@ -292,9 +283,8 @@ public class DatabaseSQL {
 
          ps.close();
       } catch (SQLException e) {
-         System.out.println(e.getMessage());
-         e.printStackTrace();
-      } 
+         System.out.println("Patient " + patientIn.getLastName() + " not inserted into inPatient table.");
+      }
    }
    
    public void insertPatient(Patient patientIn) {
@@ -313,9 +303,8 @@ public class DatabaseSQL {
          ps.executeUpdate();
          ps.close();
       } catch (SQLException e) {
-         System.out.println(e.getMessage());
-         e.printStackTrace();
-      
+         System.out.println("Patient " + patientIn.getLastName() + " not inserted into Patient table.");
+
       }     
    }
 
@@ -333,9 +322,7 @@ public class DatabaseSQL {
          ps.executeUpdate();
          ps.close();
       } catch (SQLException e) {
-         System.out.println(e.getMessage());
-         e.printStackTrace();
-
+         System.out.println("Patient " + patientIn.getLastName() + " not inserted into outPatient table.");
       }
    }
 
@@ -364,8 +351,7 @@ public class DatabaseSQL {
          ps.executeUpdate();
          ps.close();
       } catch (SQLException e) {
-         System.out.println(e.getMessage());
-         e.printStackTrace();
+         System.out.println("Patient " + patientIn.getLastName() + " not inserted into currentInPatient table.");
       }
    }
          
@@ -387,8 +373,7 @@ public class DatabaseSQL {
          ps.close();
       
       } catch (SQLException e) {
-         System.out.println(e.getMessage());
-         e.printStackTrace();
+         System.out.println("Treatment " + treatmentIn.getTreatment() + " not inserted into Treatment table.");
       }   
    }
    
@@ -406,8 +391,7 @@ public class DatabaseSQL {
          ps.close();
       
       } catch (SQLException e) {
-         System.out.println(e.getMessage());
-         e.printStackTrace();
+         System.out.println("Diagnosis " + diagIn.getDiagName() + " not inserted into Diagnosis table.");
       }   
    }
 }

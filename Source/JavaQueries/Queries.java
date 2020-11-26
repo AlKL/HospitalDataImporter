@@ -52,7 +52,7 @@ public class Queries {
                         + rs.getString("admissionDate"));
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Query issue. Exiting..");
         }
     }
 
@@ -75,7 +75,7 @@ public class Queries {
             }
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Query issue. Exiting..");
         }
     }
 
@@ -103,7 +103,7 @@ public class Queries {
             }
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Query issue. Exiting..");
         }
     }
 
@@ -127,7 +127,7 @@ public class Queries {
                         + rs.getString("primaryDoctorLastName"));
                 }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Query issue. Exiting..");
         }
     }
 
@@ -150,7 +150,7 @@ public class Queries {
                         + rs.getString("lastName"));}
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Query issue. Exiting..");
         }
     }
 
@@ -178,7 +178,7 @@ public class Queries {
                         + rs.getString("lastName"));}
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Query issue. Exiting..");
         }
     }
 
@@ -206,7 +206,7 @@ public class Queries {
                         + rs.getString("lastName"));}
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Query issue. Exiting..");
         }
     }
 
@@ -232,7 +232,7 @@ public class Queries {
                         + rs.getString("iniDiagnosis"));}
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Query issue. Exiting..");
         }
     }
 
@@ -257,7 +257,7 @@ public class Queries {
                         + rs.getString("treatmentDate"));}
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Query issue. Exiting..");
         }
     }
 
@@ -287,7 +287,7 @@ public class Queries {
                         + rs.getString("primaryDoctorLastName"));}
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Query issue. Exiting..");
         }
     }
 
@@ -335,7 +335,7 @@ public class Queries {
                         + rs.getString("BetweenAVG"));}
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Query issue. Exiting..");
         }
     }
 
@@ -362,7 +362,7 @@ public class Queries {
                         + rs.getString("counter"));}
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Query issue. Exiting..");
         }
     }
 
@@ -389,7 +389,7 @@ public class Queries {
                         + rs.getString("counter"));}
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Query issue. Exiting..");
         }
     }
 
@@ -414,7 +414,7 @@ public class Queries {
                         + rs.getString("counter"));}
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Query issue. Exiting..");
         }
     }
 
@@ -440,7 +440,7 @@ public class Queries {
                         + rs.getString("counter"));}
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Query issue. Exiting..");
         }
     }
 
@@ -465,7 +465,7 @@ public class Queries {
                         + rs.getString("counter"));}
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Query issue. Exiting..");
         }
     }
 
@@ -494,7 +494,7 @@ public class Queries {
                         + rs.getString("docLastName"));}
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Query issue. Exiting..");
         }
     }
 
@@ -522,7 +522,7 @@ public class Queries {
                         + rs.getString("docLastName"));}
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Query issue. Exiting..");
         }
     }
 
@@ -550,7 +550,7 @@ public class Queries {
                         + rs.getString("firstName"));}
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Query issue. Exiting..");
         }
     }
 
@@ -574,7 +574,7 @@ public class Queries {
                         + rs.getString("jobCategory"));}
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Query issue. Exiting..");
         }
     }
 
@@ -600,7 +600,7 @@ public class Queries {
                         + rs.getString("counter"));}
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Query issue. Exiting..");
         }
     }
 
@@ -631,7 +631,7 @@ public class Queries {
                         + rs.getString("counter"));}
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Query issue. Exiting..");
         }
     }
 
@@ -657,7 +657,7 @@ public class Queries {
                         + rs.getString("counter"));}
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Query issue. Exiting..");
         }
     }
 
@@ -680,7 +680,7 @@ public class Queries {
                 System.out.println(rs.getString("docLastName"));}
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Query issue. Exiting..");
         }
     }
 }
