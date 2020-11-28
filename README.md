@@ -1,5 +1,5 @@
 # Hospital Database
-This program imports, queries, and prints reports for hospital text files.
+This program imports, queries, and prints reports from hospital text files.
 
 Features:
 - Full query menu
