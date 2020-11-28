@@ -1,9 +1,9 @@
-import java.io.FileNotFoundException;
 import JavaQueries.*;
 import java.util.Scanner;
+import java.io.IOException;
 
 public class Menu {
-   public static void main(String[] args) throws FileNotFoundException {
+   public static void main(String[] args) throws IOException {
    
       //       RECEIVE TEXT FILE
       //end program if no file provided
@@ -22,13 +22,16 @@ public class Menu {
       //Connect query to database
       Queries query = new Queries();
       query.connect();
+      SpreadsheetPrint csvPrint = new SpreadsheetPrint();
 
       //SQL Queries Menu
       Scanner userInput = new Scanner(System.in);
       String choice;
       System.out.println("Please enter the query number to execute that query:");
       System.out.println("1.1\n1.2\n1.3\n2.1\n2.2\n2.3\n2.4\n2.5\n2.6\n2.7\n2.8\n"
-              + "3.1\n3.2\n3.3\n3.4\n3.5\n3.6\n3.7\n3.8\n4.1\n4.2\n4.3\n4.4\n4.5\n");
+              + "3.1\n3.2\n3.3\n3.4\n3.5\n3.6\n3.7\n3.8\n4.1\n4.2\n4.3\n4.4\n4.5\n"
+              + "4.6 - Print Employees spreadsheet\n4.7 - Print Patients spreadsheet\n"
+              + "4.8 - Print Treatments spreadsheet\n");
       System.out.print("Which query would you like to execute? ");
       do {
          choice = userInput.nextLine();
@@ -85,6 +88,9 @@ public class Menu {
                query.listDoctorTreatment(doctorName2);
             }
             case "4.5" -> query.listDoctorsAllInPatient();
+            case "4.6" -> csvPrint.employeePrint();
+            case "4.7" -> csvPrint.patientPrint();
+            case "4.8" -> csvPrint.treatmentPrint();
             default -> System.out.print("Invalid entry. ");
          }
          do {
