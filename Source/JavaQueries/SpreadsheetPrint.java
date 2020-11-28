@@ -1,9 +1,11 @@
 package JavaQueries;
-import Classes.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.*;
 
+/**
+ * Prints spreadsheets in csv format for Employees, Patients and Treatments
+ */
 public class SpreadsheetPrint {
     private String fromTable = "";
 
@@ -32,7 +34,7 @@ public class SpreadsheetPrint {
 
     /**
      * Prints spreadsheet with all Employee details
-     * @throws IOException
+     * @throws IOException IO Exception
      */
     public void employeePrint() throws IOException {
         String sql = "SELECT firstName, lastName, jobCategory"
@@ -61,7 +63,7 @@ public class SpreadsheetPrint {
 
     /**
      * Prints spreadsheet with all Patient details
-     * @throws IOException
+     * @throws IOException IO Exception
      */
     public void patientPrint() throws IOException {
         String sql = "SELECT patientID, firstName, lastName, primaryDoctorLastName"
@@ -91,7 +93,7 @@ public class SpreadsheetPrint {
 
     /**
      * Prints spreadsheet with all Treatment details
-     * @throws IOException
+     * @throws IOException IO Exception
      */
     public void treatmentPrint() throws IOException {
         String sql = "SELECT treatmentID, ptLastName, docLastName, treatmentType, treatment, treatmentDate"

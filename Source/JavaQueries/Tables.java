@@ -1,6 +1,14 @@
 package JavaQueries;
 
+/**
+ * SQL table string getters
+ */
 public class Tables {
+   /**
+    * Creates table for various type of employees
+    * @param employeeIn employee object
+    * @return SQL create given employee table string
+    */
    public static String employeeTable(String employeeIn) {
       return "CREATE TABLE IF NOT EXISTS " + employeeIn + "(\n"
                 + "  firstName VARCHAR(50) NOT NULL, \n"
@@ -9,6 +17,10 @@ public class Tables {
                 + ");"; 
    }
 
+   /**
+    * SQL create Employee table
+    * @return SQL employee table string
+    */
    public static String employee() {
       return "CREATE TABLE IF NOT EXISTS Employee (\n"
                 + "  firstName VARCHAR(50) NOT NULL, \n"
@@ -16,7 +28,11 @@ public class Tables {
                 + "  jobCategory VARCHAR(15) NOT NULL \n"
                 + ");";
    }
-   
+
+   /**
+    * SQL create Rooms table
+    * @return SQL rooms table string
+    */
    public static String room() {
       return "CREATE TABLE IF NOT EXISTS Rooms (\n"
                 + "  roomNumber integer PRIMARY KEY NOT NULL, \n"
@@ -24,7 +40,11 @@ public class Tables {
                 + "  CHECK (roomNumber >= 0 AND roomNumber <= 20)"
                 + ");";
    }
-   
+
+   /**
+    * SQL create Patient table
+    * @return SQL patient table string
+    */
    public static String patient() {
       return "CREATE TABLE IF NOT EXISTS Patient (\n"
                 + "  patientID integer PRIMARY KEY NOT NULL, \n"
@@ -34,7 +54,11 @@ public class Tables {
                 + "  FOREIGN KEY (primaryDoctorLastName) REFERENCES Doctor (lastName)"
                 + ");";
    }
-   
+
+   /**
+    * SQL create InPatient table
+    * @return SQL InPatient table string
+    */
    public static String inPatient() {
       return "CREATE TABLE IF NOT EXISTS InPatient (\n"
                 + "  inPtNo integer PRIMARY KEY NOT NULL, \n"
@@ -56,6 +80,10 @@ public class Tables {
                 + ");";
    }
 
+   /**
+    * SQL create CurrentInPatient table
+    * @return SQL CurrentInPatient table string
+    */
    public static String currentInPatient() {
       return "CREATE TABLE IF NOT EXISTS currentInPatient (\n"
               + "  inPtNo integer PRIMARY KEY NOT NULL, \n"
@@ -77,13 +105,10 @@ public class Tables {
               + ");";
    }
 
-   public static String diagnosis() {
-      return "CREATE TABLE IF NOT EXISTS Diagnosis(\n"
-                + "  diagnosisID integer PRIMARY KEY, \n"
-                + "  diagnosisName VARCHAR(100) NOT NULL \n"
-                + ");";
-   }
-
+   /**
+    * SQL create OutPatient table
+    * @return SQL create OutPatient table string
+    */
    public static String outPatient() {
       return "CREATE TABLE IF NOT EXISTS OutPatient(\n"
               + "  patientID integer PRIMARY KEY NOT NULL, \n"
@@ -91,6 +116,17 @@ public class Tables {
               + "  iniDiagnosis VARCHAR(100) NOT NULL, \n"
               + "  FOREIGN KEY (patientID) REFERENCES Patient (patientID), \n"
               + "  FOREIGN KEY (primaryDoctorLastName) REFERENCES Doctor (lastName) \n"
+              + ");";
+   }
+
+   /**
+    * SQL create Diagnosis table
+    * @return SQL create Diagnosis table string
+    */
+   public static String diagnosis() {
+      return "CREATE TABLE IF NOT EXISTS Diagnosis(\n"
+              + "  diagnosisID integer PRIMARY KEY, \n"
+              + "  diagnosisName VARCHAR(100) NOT NULL \n"
               + ");";
    }
 }

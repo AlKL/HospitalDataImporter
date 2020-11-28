@@ -2,6 +2,9 @@ import JavaQueries.*;
 import java.util.Scanner;
 import java.io.IOException;
 
+/**
+ * Takes in parameters for Person or Treatment text file, creates a database and queries the database
+ */
 public class Menu {
    public static void main(String[] args) throws IOException {
    

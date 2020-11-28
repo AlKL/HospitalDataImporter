@@ -6,6 +6,9 @@ import java.util.HashMap;
 import Classes.*;
 import JavaQueries.DatabaseSQL;
 
+/**
+ * Import data in objects
+ */
 public class DataImporter {
    //Instance Variables
    // Variables for Patients
@@ -30,6 +33,9 @@ public class DataImporter {
    private static int treatmentID;                    //tracks treatmentID
    private Treatment[] treatmentList;                 //tracks all treatments administered
 
+   /**
+    * Class constructor - initialized instance variables
+    */
    //constructor
    public DataImporter() {
       ptMap = new HashMap<>();
@@ -52,8 +58,12 @@ public class DataImporter {
 
    }
 
-   //Reads in the text file and imports it into the database
-   public void readHospitalFile(String fileName) 
+   /**
+    * Reads in a text file, creates and inserts objects into the database
+    * @param fileName text file
+    * @throws FileNotFoundException no file exception
+    */
+   public void readHospitalFile(String fileName)
                                        throws FileNotFoundException {  
       Scanner scanFile = new Scanner(new File(fileName));
       Scanner scanChecker = new Scanner(new File(fileName));
@@ -188,11 +198,19 @@ public class DataImporter {
       }
    }
 
+   /**
+    * Creates a database if not exist, and connects to it
+    * @param databaseIn database
+    */
    public void connectToDatabase(DatabaseSQL databaseIn) {
       databaseIn.createNewDatabase();
       databaseIn.connect();
    }
 
+   /**
+    * Drops all tables, creates all tables and inserts all patient related objects into the database
+    * @param databaseIn database
+    */
    public void personDatabaseOperations(DatabaseSQL databaseIn) {
       databaseIn.dropAllTables();
       databaseIn.createAllTables();
@@ -229,6 +247,10 @@ public class DataImporter {
       System.out.println("Person text file inserted into database.\n");
    }
 
+   /**
+    * Drops treatment table, creates treatment table and inserts all treatments into the database
+    * @param databaseIn database
+    */
    public void treatmentDatabaseOperations(DatabaseSQL databaseIn) {
       databaseIn.dropTreatment();
       databaseIn.createTreatmentTable();
@@ -239,47 +261,84 @@ public class DataImporter {
       }
       System.out.println("Treatment text file inserted into database.\n");
    }
-   
+
+   /**
+    * Add employee object to employee list
+    * @param employeeIn employee object
+    */
    public void addEmployee(Employee employeeIn) {
       employeeList = Arrays.copyOf(employeeList, employeeList.length + 1);
       employeeList[employeeList.length - 1] = employeeIn;
    }
-   
+
+   /**
+    * Add patient object to patient list
+    * @param patientIn patient object
+    */
    public void addPatient(Patient patientIn) {
       patientList = Arrays.copyOf(patientList, patientList.length + 1);
       patientList[patientList.length - 1] = patientIn;
    }
 
+   /**
+    * Add patient object to Inpatient list
+    * @param patientIn patient object
+    */
    public void addInPatient(Patient patientIn) {
       inPatientList = Arrays.copyOf(inPatientList, inPatientList.length + 1);
       inPatientList[inPatientList.length - 1] = patientIn;
    }
 
+   /**
+    * Add patient object to Outpatient list
+    * @param patientIn patient object
+    */
    public void addOutPatient(Patient patientIn) {
       outPatientList = Arrays.copyOf(outPatientList, outPatientList.length + 1);
       outPatientList[outPatientList.length - 1] = patientIn;
    }
 
+   /**
+    * Add patient object to currentInPatient list
+    * @param patientIn patient object
+    */
    public void addCurrentInPatient(Patient patientIn) {
       currentInPatientList = Arrays.copyOf(currentInPatientList, currentInPatientList.length + 1);
       currentInPatientList[currentInPatientList.length - 1] = patientIn;
    }
-   
+
+   /**
+    * Add treatment object to Treatment list
+    * @param treatmentIn treatment object
+    */
    public void addTreatment(Treatment treatmentIn) {
       treatmentList = Arrays.copyOf(treatmentList, treatmentList.length + 1);
       treatmentList[treatmentList.length - 1] = treatmentIn;
    }
-   
+
+   /**
+    * Add Diagnosis object to Diagnosis list
+    * @param diagIn diagnosis object
+    */
    public void addDiag(Diagnosis diagIn) {
       diagList = Arrays.copyOf(diagList, diagList.length + 1);
       diagList[diagList.length - 1] = diagIn;
    }
 
+   /**
+    * Add to treatment hashmap to map treatment ID and name
+    * @param treatmentName treatment name
+    */
    public static void addTreatMap(String treatmentName) {
       treatMap.put(treatmentName, treatmentID);
       treatmentID++;
    }
-   
+
+   /**
+    * Add to diagnosis hashmap to map diagnosis ID and name
+    * @param iniDiagnosis diagnosis name
+    * @return diagnosis ID
+    */
    public static int addDiagToMap(String iniDiagnosis) {
       boolean flag = diagMap.containsKey(iniDiagnosis);
       if (!flag) {
@@ -291,6 +350,11 @@ public class DataImporter {
       return diagMap.get(iniDiagnosis);
    }
 
+   /**
+    * Add to patient hashmap to map patient ID and name
+    * @param lastName patient last name
+    * @return patient ID
+    */
    public static int addPtMap(String lastName) {
       ptMap.put(lastName, patientID);
       int temp = patientID;

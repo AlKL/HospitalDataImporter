@@ -54,11 +54,11 @@ public class DatabaseSQL {
       }
       return conn;
    }
-   
-   /** Creates all Tables required for the DB. **/
+
+   /**
+    * Creates all database tables
+    */
    public void createAllTables() {
-   //NTS: when an employee of any type is entered into the DB, also enter into this
-   //NTS: employee must exist in order for the other classes to exist
       String employee = Tables.employee();
       String doctor = Tables.employeeTable("Doctor");
       String nurse = Tables.employeeTable("Nurse");
@@ -94,6 +94,9 @@ public class DatabaseSQL {
       }
    }
 
+   /**
+    * Create Treatment table
+    */
    public void createTreatmentTable() {
       String sql = "CREATE TABLE IF NOT EXISTS Treatment (\n"
                 + "  treatmentID integer, \n"
@@ -130,7 +133,10 @@ public class DatabaseSQL {
          System.out.println("Rooms table not created.");
       }   
    }
-      
+
+   /**
+    * Drops all tables
+    */
    public void dropAllTables() {
       this.dropTable("currentInPatient");
       this.dropTable("InPatient");
@@ -146,7 +152,11 @@ public class DatabaseSQL {
       this.dropTable("Rooms");
       this.dropTable("Diagnosis");
    }
-   
+
+   /**
+    * Drop a given table
+    * @param tableIn table name
+    */
    public void dropTable(String tableIn) {
       String sql = "DROP TABLE IF EXISTS " + tableIn + ";";
       
@@ -158,7 +168,10 @@ public class DatabaseSQL {
          System.out.println(tableIn + " table not dropped.");
       }      
    }
-   
+
+   /**
+    * Drop Treatment table
+    */
    public void dropTreatment() {
       String sql = "DROP TABLE IF EXISTS Treatment;";
 
@@ -171,9 +184,12 @@ public class DatabaseSQL {
       }   
    
    }
-   
+
+   /**
+    * Insert employees to Employee table
+    * @param employeeIn employee name
+    */
    public void insertEmployee(Employee employeeIn) {
-   
       Character jobCat = employeeIn.getJobCat();
       String jobCharToString = jobCat.toString();
       String profession;
@@ -218,7 +234,12 @@ public class DatabaseSQL {
          System.out.println(employeeIn + " not inserted.");
       }   
    }
-   
+
+   /**
+    * Insert employee to specific profession table
+    * @param employeeIn employee name
+    * @param professionIn profession
+    */
    public void insertEmpToCat(Employee employeeIn, String professionIn) {
       String sql = "INSERT INTO " + professionIn + "(firstName, lastName) VALUES (?, ?);";
       
@@ -234,6 +255,10 @@ public class DatabaseSQL {
       }
    }
 
+   /**
+    * Update room table to occupied
+    * @param patientIn patient object
+    */
    public void updateRoom(Patient patientIn) {
       String update = "UPDATE Rooms"
                   + " SET roomOcc = 1"
@@ -248,6 +273,10 @@ public class DatabaseSQL {
       }
    }
 
+   /**
+    * Insert a current or prior admitted patient into Inpatient table
+    * @param patientIn patient object
+    */
    public void insertInPatient(Patient patientIn) {
       String sql = "INSERT INTO InPatient(inPtNo, patientID, firstName, lastName, roomNumber,"
                + " emergencyContact, emergencyNumber, insPolicy, insPolicyNo,"
@@ -286,7 +315,11 @@ public class DatabaseSQL {
          System.out.println("Patient " + patientIn.getLastName() + " not inserted into inPatient table.");
       }
    }
-   
+
+   /**
+    * Insert Patient into Patient table
+    * @param patientIn patient object
+    */
    public void insertPatient(Patient patientIn) {
       String sql = "INSERT INTO Patient(patientID, firstName, lastName,"
                + " primaryDoctorLastName)"
@@ -308,6 +341,10 @@ public class DatabaseSQL {
       }     
    }
 
+   /**
+    * Insert Outpatient into Outpatient table
+    * @param patientIn patient object
+    */
    public void insertOutPatient(Patient patientIn) {
       String sql = "INSERT INTO OutPatient(patientID, primaryDoctorLastName, iniDiagnosis)"
               + " VALUES (?, ?, ?);";
@@ -326,6 +363,10 @@ public class DatabaseSQL {
       }
    }
 
+   /**
+    * Insert currently admitted patient into Inpatient table
+    * @param patientIn patient object
+    */
    public void insertCurrentInPatient(Patient patientIn) {
       String sql = "INSERT INTO currentInPatient(inPtNo, patientID, firstName, lastName, roomNumber,"
               + " emergencyContact, emergencyNumber, insPolicy, insPolicyNo,"
@@ -354,7 +395,11 @@ public class DatabaseSQL {
          System.out.println("Patient " + patientIn.getLastName() + " not inserted into currentInPatient table.");
       }
    }
-         
+
+   /**
+    * Insert Treatment into Treatment table
+    * @param treatmentIn treatment object
+    */
    public void insertTreatment(Treatment treatmentIn) {
    
       String sql = "INSERT INTO Treatment(treatmentID, ptLastName, docLastName, treatmentType,"
@@ -376,7 +421,11 @@ public class DatabaseSQL {
          System.out.println("Treatment " + treatmentIn.getTreatment() + " not inserted into Treatment table.");
       }   
    }
-   
+
+   /**
+    * Insert Diagnosis into Diagnosis table
+    * @param diagIn diagnosis object
+    */
    public void insertDiag(Diagnosis diagIn) {
    
       String sql = "INSERT INTO Diagnosis(diagnosisID, diagnosisName)"
