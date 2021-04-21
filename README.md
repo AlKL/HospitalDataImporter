@@ -13,3 +13,6 @@ Database application that imports, queries and prints reports. Text files are co
 - Foreign key restrictions to prevent invalid entries
 - Exception handling
 - Report printing to spreadsheet
+
+## To-do:
+- 
