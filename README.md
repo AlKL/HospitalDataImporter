@@ -15,4 +15,4 @@ Database application that imports, queries and prints reports. Text files are co
 - Report printing to spreadsheet
 
 ## To-do:
-- 
+- Make it an executable program
